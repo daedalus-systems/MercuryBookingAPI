@@ -1,0 +1,10 @@
+﻿syntax = "proto3";
+
+import "Shared/Google/Type/decimal.proto";
+
+package BookingPlatform.Gateway.Shared;
+
+message PriceDetails {
+  google.type.Decimal RetailPrice = 1;
+  google.type.Decimal TotalPrice = 2;
+}

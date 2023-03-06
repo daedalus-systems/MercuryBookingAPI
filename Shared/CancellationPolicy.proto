@@ -1,0 +1,12 @@
+﻿syntax = "proto3";
+
+import "google/protobuf/wrappers.proto";
+import "Shared/CancellationFee.proto";
+
+package BookingPlatform.Gateway.Shared;
+
+message CancellationPolicy {
+  google.protobuf.BoolValue CancelIfBadWeather = 1;
+  google.protobuf.BoolValue CancelIfInsufficientTravelers = 2;
+  repeated BookingPlatform.Gateway.Shared.CancellationFee CancellationFees = 3;
+}

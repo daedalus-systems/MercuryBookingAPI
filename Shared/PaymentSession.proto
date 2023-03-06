@@ -1,0 +1,14 @@
+﻿syntax = "proto3";
+
+import "Shared/Google/Type/decimal.proto";
+
+package BookingPlatform.Gateway.Shared;
+
+message PaymentSession
+{
+  bool Success = 1;
+  google.type.Decimal Amount = 2;
+  string CurrencyCode = 3;
+  string SessionJson = 4;
+  string ClientKey = 5;
+}

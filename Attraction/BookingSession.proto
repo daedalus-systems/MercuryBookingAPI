@@ -1,0 +1,22 @@
+﻿syntax = "proto3";
+import "Shared/BookingSessionStatus.proto";
+import "google/protobuf/wrappers.proto";
+
+package BookingPlatform.Gateway.Attraction;
+
+service BookingSession {
+  rpc CheckBookingSessionStatus (CheckBookingSessionStatusRequest) returns (CheckBookingSessionStatusResponse);
+}
+
+message CheckBookingSessionStatusRequest {
+  string TenantId = 1;
+  int32 BrandId = 2;
+  int32 SalesChannelId = 3;
+  string BookingSessionId = 4;
+}
+
+message CheckBookingSessionStatusResponse
+{
+  BookingPlatform.Gateway.Shared.BookingSessionStatus BookingStatus = 1;
+  google.protobuf.StringValue BookingReference = 2;
+}

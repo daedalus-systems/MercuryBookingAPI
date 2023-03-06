@@ -1,0 +1,25 @@
+﻿syntax = "proto3";
+
+import "Shared/CheckoutListItem.proto";
+
+package BookingPlatform.Gateway.Attraction;
+
+message CheckoutRequest {
+  string TenantId = 1; // representing the connecting partner who made the actual integration
+  int32 BrandId = 2; // defining the brand under the the integrating partner
+  int32 SalesChannelId = 3; // the actual source of the request like web or personal call
+  repeated string OptionBookTokens = 4; // hashed token given by the prebook contains all necessary data for third party book request
+}
+
+message CheckoutResponse
+{
+  repeated BookingPlatform.Gateway.Shared.CheckoutListItem CheckoutListItems = 1; // form input descriptor list for information necessary to collect for the booking
+}
+
+/* Checkout should be fired after payment flow is started and and gives back a form field list with
+ * conditional rules between the fields. These are questions about the travellers and the pickup.
+ * It gives back every other basic product detail info for building components of the checkout page.
+ * Ui has all the information to build a fully functional form and validate the inputs from this field list */
+service Checkout {
+  rpc Checkout (CheckoutRequest) returns (CheckoutResponse);
+}

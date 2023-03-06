@@ -1,0 +1,25 @@
+﻿syntax = "proto3";
+
+import "google/protobuf/wrappers.proto";
+import "Shared/Google/Type/decimal.proto";
+import "Shared/GuestConfiguration.proto";
+import "Shared/BookingStatus.proto";
+
+package BookingPlatform.Gateway.Shared;
+
+message BookingComponentDetail {
+  string BookingComponentReference = 1;
+  string ComponentType = 2;
+  int32 ProductId = 3;
+  google.protobuf.StringValue ProductOption = 4;
+  BookingPlatform.Gateway.Shared.BookingStatus ComponentStatus = 5;
+  string TravelDate = 6;
+  google.protobuf.StringValue StartTime = 7;
+  string VoucherUrl = 8;
+  repeated BookingPlatform.Gateway.Shared.GuestConfiguration Occupancies = 9;
+  google.type.Decimal TotalPrice = 10;
+  google.type.Decimal OriginalTotalPrice = 11;
+  google.protobuf.StringValue CancelReason = 12;
+  google.protobuf.StringValue CancelDate = 13;
+  google.protobuf.BoolValue IsCustomerCancellation = 14;
+}

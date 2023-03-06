@@ -1,0 +1,35 @@
+﻿syntax = "proto3";
+
+package BookingPlatform.Gateway.Attraction;
+
+service Autocomplete {
+  rpc Search (AutoCompleteSearchRequest) returns (AutoCompleteSearchResponse);
+}
+
+message AutoCompleteSearchRequest {
+  string TenantId = 1;
+  int32 BrandId = 2;
+  int32 SalesChannelId = 3;
+  string LanguageCode = 4;
+  repeated Category Categories = 5;
+  string SearchString = 6;
+}
+
+message AutoCompleteSearchResponse {
+  repeated AutoCompleteResultsByCategories Categories = 1;
+}
+
+message AutoCompleteResultsByCategories {
+  Category Category = 1;
+  repeated AutoCompleteResultItem Results = 2;
+}
+
+message AutoCompleteResultItem {
+  string Name = 1;
+  int32 Id = 2;
+}
+
+enum Category {
+    ATTRACTION = 0;
+    ATTRACTION_LOCATION = 1;
+  }

@@ -1,0 +1,30 @@
+﻿syntax = "proto3";
+
+import "Shared/BookingQuestionFieldType.proto";
+import "Shared/BookingQuestionOption.proto";
+import "Shared/BookingQuestionConditionalRule.proto";
+import "Shared/BookingQuestionRequirementType.proto";
+import "Shared/GuestType.proto";
+import "Shared/BookingQuestionGroup1.proto";
+import "Shared/BookingQuestionGroup2.proto";
+import "google/protobuf/wrappers.proto";
+
+package BookingPlatform.Gateway.Shared;
+
+/* BookingQuestionFormElements is representing a descriptor for a UI form builder
+ * to be able to build a fully dynamic form of a dynamic set of question defined by the
+ * the chosen product option itself */
+message BookingQuestionFormElement {
+  string QuestionId = 1; // predefined id of the question type
+  BookingPlatform.Gateway.Shared.BookingQuestionFieldType FieldType = 2; // form element type for from builder like "string", "date", "date_range", "select"
+  google.protobuf.StringValue Label = 3; // Label of the form field
+  google.protobuf.StringValue Hint = 4; // tooltip or suggested value for the field
+  repeated BookingPlatform.Gateway.Shared.BookingQuestionOption Options = 5; // available option used for dropdowns
+  BookingPlatform.Gateway.Shared.BookingQuestionRequirementType Required = 6; // should be validated as required in the form if true
+  int32 MaxLength = 7; // max length for string fields, should be validated by this value if the field is string
+  repeated BookingPlatform.Gateway.Shared.BookingQuestionConditionalRule ConditionalRules = 8; // defines the connection between multiple form fields
+  BookingPlatform.Gateway.Shared.BookingQuestionGroup1 Group1 = 9; // First level visual group for the ui
+  BookingPlatform.Gateway.Shared.BookingQuestionGroup2 Group2 = 10; // Second level visual group for the ui under BookingQuestionGroup1
+  google.protobuf.Int32Value TravellerNum = 11; // If VisualGroup2 is traveller than it contains the number for the traveller
+  BookingPlatform.Gateway.Shared.GuestType GuestType = 12;// Guest type like ADULT or CHILD for the per traveller questions visual group titles
+}

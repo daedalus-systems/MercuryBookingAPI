@@ -1,0 +1,9 @@
+syntax = "proto3";
+
+package BookingPlatform.Gateway.Shared;
+
+message FromPrice {
+   int32 ProductId = 1;
+   float NetAmount = 2;
+   string CurrencyCode = 3;
+}

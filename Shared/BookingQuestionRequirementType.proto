@@ -1,0 +1,9 @@
+﻿syntax = "proto3";
+
+package BookingPlatform.Gateway.Shared;
+
+enum BookingQuestionRequirementType{
+    REQUIRED = 0;
+    OPTIONAL = 1;
+    CONDITIONAL = 2;
+}

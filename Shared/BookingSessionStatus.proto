@@ -1,0 +1,12 @@
+﻿syntax = "proto3";
+
+package BookingPlatform.Gateway.Shared;
+
+enum BookingSessionStatus {
+    InitiatingPayment = 0;
+    PaymentInProgress = 1;
+    PaymentFailed = 2;
+    BookingInProgress = 3;
+    BookingCompleted = 4;
+    BookingFailed = 5;
+}

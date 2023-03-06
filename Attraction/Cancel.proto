@@ -1,0 +1,38 @@
+﻿syntax = "proto3";
+
+import "Shared/CancellationStatus.proto";
+import "google/protobuf/wrappers.proto";
+import "Shared/Google/Type/decimal.proto";
+
+package BookingPlatform.Gateway.Attraction;
+
+service Cancel {
+  rpc Cancel (CancelRequest) returns (CancelResponse);
+}
+
+message CancelRequest {
+  string TenantId = 1;
+  int32 BrandId = 2;
+  int32 SalesChannelId = 3;
+  string BookingReference = 4;
+  repeated CancellationItem BookingComponents = 5;
+}
+
+message CancelResponse {
+  string BookingReference = 1;
+  string CurrencyCode = 2;
+  repeated CancellationResult BookingComponents = 3;
+}
+
+/* Cancellation reason is representing a value for the cancellation reason select form element*/
+message CancellationItem {
+  string BookingComponentReference = 1;
+  google.protobuf.StringValue CancellationReasonCode = 2; // Supplier specific cancellation reason code
+}
+
+message CancellationResult {
+  string BookingComponentReference = 1;
+  BookingPlatform.Gateway.Shared.CancellationStatus CancellationStatus = 2;
+  google.protobuf.StringValue ReasonForDecline = 3;
+  google.type.Decimal CancellationFee = 4;
+}

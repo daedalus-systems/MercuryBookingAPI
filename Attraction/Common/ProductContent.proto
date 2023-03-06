@@ -1,0 +1,28 @@
+﻿syntax = "proto3";
+
+import "Shared/AttributeList.proto";
+
+package BookingPlatform.Gateway.Attraction.Common;
+
+service GetProduct {
+  rpc GetProduct (GetProductRequest) returns (GetProductResponse);
+}
+
+message GetProductRequest {
+  int32 ProductId = 1;
+  string LanguageCode = 2;
+}
+
+message GetProductResponse {
+  int32 ProductId = 1;
+  string ProductName = 2;
+  string LocationName = 3;
+  float AvgRating = 4;
+  string MainImageUrl = 5;
+  string ShortDescription = 6;
+  int32 DurationMin = 7;
+  bool FreeCancellation = 8;
+  repeated BookingPlatform.Gateway.Shared.AttributeList Attributes = 9; // New object or string?
+  float FromPrice = 10;
+  string CurrencyCode = 11;
+}

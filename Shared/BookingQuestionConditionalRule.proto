@@ -1,0 +1,14 @@
+﻿syntax = "proto3";
+
+import "Shared/BookingQuestionRuleConditionType.proto";
+import "google/protobuf/wrappers.proto";
+
+package BookingPlatform.Gateway.Shared;
+
+message BookingQuestionConditionalRule
+{
+  string SourceFieldId = 1; // id of the form element which has the source value of the dependent rule
+  google.protobuf.StringValue SourceValue = 2; // value which is the trigger for the rule to be true
+  BookingPlatform.Gateway.Shared.BookingQuestionRuleConditionType RuleConditionType = 3; // enum value which defines the type of the connection between actual and source field
+}
+

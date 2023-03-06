@@ -1,0 +1,8 @@
+syntax = "proto3";
+
+package BookingPlatform.Gateway.Shared;
+
+message GuestDetails {
+   string FirstName = 1;
+   string LastName = 2;
+}

@@ -1,0 +1,11 @@
+﻿syntax = "proto3";
+
+package BookingPlatform.Gateway.Shared;
+
+enum BookingQuestionFieldType{
+  DATE = 0;
+  NUMBER_AND_UNIT = 1;
+  STRING = 2;
+  TIME = 3;
+  SELECT = 4;
+}

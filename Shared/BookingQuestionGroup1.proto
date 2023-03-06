@@ -1,0 +1,9 @@
+﻿syntax = "proto3";
+
+package BookingPlatform.Gateway.Shared;
+
+enum BookingQuestionGroup1{
+  CONTACT = 0;
+  TRAVELLER = 1;
+  BOOKING = 2;
+}

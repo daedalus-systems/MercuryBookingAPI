@@ -1,0 +1,9 @@
+﻿syntax = "proto3";
+
+package BookingPlatform.Gateway.Shared;
+
+/* ProductOption is representing a full set of information of a selectable product option */
+message BookingQuestionValidationError {
+  string BookingQuestionId = 1; // third party id of the option
+  string Error = 2; // error description in words
+}

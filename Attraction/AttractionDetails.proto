@@ -1,0 +1,164 @@
+﻿syntax = "proto3";
+import "Shared/Google/Type/decimal.proto";
+import "google/protobuf/wrappers.proto";
+
+package BookingPlatform.Gateway.Attraction;
+
+service AttractionDetails {
+  rpc AttractionDetails (AttractionDetailsRequest) returns (AttractionDetailsResponse);
+  rpc GetTopCategoryByLocation (GetTopCategoryByLocationRequest) returns (GetTopCategoryByLocationResponse);
+}
+
+message AttractionDetailsRequest {
+  string TenantId = 1;
+  int32 BrandId = 2;
+  int32 SalesChannelId = 3;
+  string LanguageCode = 4;
+  int32 ProductId = 5;
+}
+
+message AttractionDetailsResponse {
+  int32 ProductId = 1;
+  google.protobuf.StringValue LanguageCode = 2;
+  google.protobuf.StringValue ProductName = 3;
+  google.protobuf.StringValue LocationName = 4;
+  google.type.Decimal ReviewRating = 5;
+  google.protobuf.Int32Value TotalReviews = 6;
+  repeated Image Images = 7;
+  google.type.Decimal Longitude = 8;
+  google.type.Decimal Latitude = 9;
+  google.protobuf.StringValue TimeZone = 10;
+  google.protobuf.StringValue Description = 11;
+  repeated InclusionExclusion Inclusions = 12;
+  repeated InclusionExclusion Exclusions = 13;
+  repeated AdditionalDetail AdditionalDetails = 14;
+  bool FreeCancellation = 15;
+  repeated AttractionAttribute Attributes = 16;
+  repeated AgeBandModel AgeBands = 17;
+  repeated string TicketTypes = 18;
+  google.type.Decimal FromPrice = 19;
+  google.protobuf.StringValue CurrencyCode = 20;
+  google.protobuf.StringValue CancellationPolicyDescription = 21;
+  repeated ReviewScore ReviewScoreBreakDown = 22;
+  repeated StartEndLocation StartLocations = 23;
+  repeated StartEndLocation EndLocations = 24;
+  repeated string SupportedLanguages = 25;
+  repeated OperatingHours ProductOperatingHours = 26;
+  google.protobuf.Int32Value DurationFromMinutes = 27;
+  google.protobuf.Int32Value DurationToMinutes = 28;
+  AttractionDetailItinerary Itinerary = 29;
+  int32 MinTravelersPerBooking = 30;
+  int32 MaxTravelersPerBooking = 31;
+  bool RequiresAdultForBooking = 32;
+}
+
+message InclusionExclusion {
+  google.protobuf.StringValue Category = 1;
+  google.protobuf.StringValue Description = 2;
+}
+
+message OperatingHours {
+  google.protobuf.StringValue ProductOptionCode = 1;
+  google.protobuf.StringValue ProductOptionTitle =2;
+  google.protobuf.StringValue SeasonStartDate = 3;
+  google.protobuf.StringValue SeasonEndDate = 4;
+  repeated OperatingDaysAndTime OperatingDaysAndTimes = 5;
+}
+
+message OperatingDaysAndTime {
+  google.protobuf.StringValue OpensAt = 1;
+  google.protobuf.StringValue ClosesAt = 2;
+  repeated string DaysOfWeek = 3;
+}
+
+message ReviewScore {
+  google.type.Decimal Rating = 1;
+  google.protobuf.Int32Value Count = 2;
+}
+
+message AgeBandModel {
+  google.protobuf.StringValue AgeBand = 1;
+  int32 StartAge = 2;
+  int32 EndAge = 3;
+  int32 MinTravelersPerBooking = 4;
+  int32 MaxTravelersPerBooking = 5;
+}
+
+message AttractionAttribute {
+  int32 TagId = 1;
+  google.protobuf.StringValue AttributeName = 2;
+}
+
+message AdditionalDetail {
+  google.protobuf.StringValue Type = 1;
+  google.protobuf.StringValue Description = 2;
+}
+
+message Image {
+  google.protobuf.StringValue ImageUrl = 1;
+  google.protobuf.StringValue Caption = 2;
+}
+
+message AttractionDetailItinerary {
+  google.protobuf.StringValue ItineraryType = 1;
+  google.protobuf.StringValue ItineraryDescription = 2;
+  repeated ItineraryItem ItineraryItems = 3;
+  repeated ItineraryRoute ItineraryRoutes = 4;
+  repeated ItineraryDay ItineraryDays = 5;
+}
+
+message ItineraryDay {
+  int32 DayNumber = 1;
+  google.protobuf.StringValue Title = 2;
+  repeated string Accommodations = 3;
+  repeated string FoodAndDrinks = 4;
+  repeated ItineraryItem ItineraryItems = 5;
+}
+
+message ItineraryItem {
+  bool IsPassByWithoutStopping = 1;
+  google.protobuf.StringValue AdmissionIncluded = 2;
+  google.protobuf.StringValue Description = 3;
+  google.protobuf.StringValue PointOfInterestLocationName = 4;
+  google.protobuf.Int32Value DurationFromMinutes = 5;
+  google.protobuf.Int32Value DurationToMinutes = 6;
+}
+
+message ItineraryRoute {
+  google.protobuf.StringValue Name = 1;
+  google.protobuf.StringValue OperatingSchedule = 2;
+  repeated string PointOfInterestLocationNames = 3;
+  google.protobuf.Int32Value DurationFromMinutes = 4;
+  google.protobuf.Int32Value DurationToMinutes = 5;
+  repeated StopLocation StopLocations = 6;
+}
+
+message StopLocation {
+  google.protobuf.StringValue Name = 1;
+  google.protobuf.StringValue Description = 2;
+}
+
+message StartEndLocation {
+  google.protobuf.StringValue Name = 1;
+  google.protobuf.StringValue Address = 2;
+  google.protobuf.StringValue Description = 3;
+}
+
+message GetTopCategoryByLocationRequest {
+  string TenantId = 1;
+  int32 BrandId = 2;
+  int32 SalesChannelId = 3;
+  string LanguageCode = 4;
+  int32 LocationId = 5;
+}
+
+message GetTopCategoryByLocationResponse {
+  repeated TopCategoryItem TopCategories = 1;
+}
+
+message TopCategoryItem {
+  int32 AttributeId = 1;
+  int32 SortOrder = 2;
+  string AttributeName = 3;
+  string ImageUrl = 4;
+}

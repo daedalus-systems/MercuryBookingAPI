@@ -1,0 +1,24 @@
+﻿syntax = "proto3";
+import "Shared/GuestConfiguration.proto";
+import "Attraction/Common/ProductOption.proto";
+
+package BookingPlatform.Gateway.Attraction;
+
+service Availability {
+  rpc Availability (AvailabilityRequest) returns (AvailabilityResponse);
+}
+
+message AvailabilityRequest {
+  string TenantId = 1;
+  int32 BrandId = 2;
+  int32 SalesChannelId = 3;
+  string CurrencyCode = 4;
+  string LanguageCode = 5;
+  string TravelDate = 6;
+  int32 ProductId = 7;
+  repeated BookingPlatform.Gateway.Shared.GuestConfiguration Guests = 8;
+}
+
+message AvailabilityResponse {
+  repeated BookingPlatform.Gateway.Attraction.Common.ProductOption ProductOptions = 1;
+}

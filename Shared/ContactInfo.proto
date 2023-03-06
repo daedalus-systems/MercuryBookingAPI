@@ -1,0 +1,11 @@
+﻿syntax = "proto3";
+import "Shared/Phone.proto";
+
+package BookingPlatform.Gateway.Shared;
+
+message ContactInfo {
+   string Email = 1;
+   BookingPlatform.Gateway.Shared.Phone Phone = 2;
+   string FirstName = 3;
+   string LastName = 4;
+}

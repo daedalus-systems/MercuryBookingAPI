@@ -1,0 +1,30 @@
+﻿syntax = "proto3";
+import "Shared/ContactInfo.proto";
+import "Shared/BookingQuestionAnswer.proto";
+import "Shared/PaymentSession.proto";
+import "google/protobuf/wrappers.proto";
+
+package BookingPlatform.Gateway.Attraction;
+
+service Book {
+  rpc Book (BookRequest) returns (BookResponse);
+}
+
+message BookingItem {
+  string OptionBookToken = 1;
+  repeated BookingPlatform.Gateway.Shared.BookingQuestionAnswer BookingQuestionAnswers = 3;
+}
+
+message BookRequest {
+  string TenantId = 1;
+  int32 BrandId = 2;
+  int32 SalesChannelId = 3;
+  BookingPlatform.Gateway.Shared.ContactInfo ContactInfo = 4;
+  repeated BookingItem BookingItems = 5;
+  google.protobuf.StringValue PartnerBookingReference = 6;
+}
+
+message BookResponse {
+  string BookingSessionId = 1;
+  BookingPlatform.Gateway.Shared.PaymentSession PaymentSession = 2;
+}

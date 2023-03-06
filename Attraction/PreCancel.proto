@@ -1,0 +1,31 @@
+﻿syntax = "proto3";
+
+import "Shared/CancellationReason.proto";
+import "Shared/Google/Type/decimal.proto";
+
+package BookingPlatform.Gateway.Attraction;
+
+service PreCancel {
+  rpc PreCancel (PreCancelRequest) returns (PreCancelResponse);
+}
+
+message PreCancelRequest {
+  string TenantId = 1;
+  int32 BrandId = 2;
+  int32 SalesChannelId = 3;
+  string BookingReference = 4;
+}
+
+message PreCancelResponse {
+  string BookingReference = 1;
+  string CurrencyCode = 2;
+  repeated BookingComponent BookingComponents = 3;
+}
+
+message BookingComponent
+{
+  string BookingComponentReference = 1;
+  bool IsCancellationAllowed = 2;
+  google.type.Decimal CancellationFee = 3;
+  repeated BookingPlatform.Gateway.Shared.CancellationReason CancellationReasons = 4;
+}

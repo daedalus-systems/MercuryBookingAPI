@@ -1,0 +1,7 @@
+syntax = "proto3";
+
+package BookingPlatform.Gateway.Shared;
+
+message AttributeList {
+   int32 AttributeId = 1;
+}

@@ -1,0 +1,28 @@
+﻿syntax = "proto3";
+
+import "Shared/BookingQuestionAnswer.proto";
+import "Shared/ContactInfo.proto";
+import "Shared/BookingQuestionValidationError.proto";
+import "Shared/RequestPropertyValidationError.proto";
+
+package BookingPlatform.Gateway.Attraction;
+
+message BookingValidationRequest {
+  string TenantId = 1;
+  int32 BrandId = 2;
+  int32 SalesChannelId = 3;
+  string OptionToken = 4;
+  BookingPlatform.Gateway.Shared.ContactInfo ContactInfo = 5;
+  repeated BookingPlatform.Gateway.Shared.BookingQuestionAnswer BookingQuestionAnswers = 6; 
+}
+
+message BookingValidationResponse
+{
+  bool IsValid = 1; // is the book request valid
+  repeated BookingPlatform.Gateway.Shared.BookingQuestionValidationError BookingQuestionValidationErrors = 2; // list of validation errors by the field name and path
+  repeated BookingPlatform.Gateway.Shared.RequestPropertyValidationError RequestPropertyValidationErrors = 3; // list of validation errors by the field name and path
+}
+
+service BookingValidation {
+  rpc ValidateBooking (BookingValidationRequest) returns (BookingValidationResponse);
+}

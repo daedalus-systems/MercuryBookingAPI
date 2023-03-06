@@ -1,0 +1,38 @@
+﻿syntax = "proto3";
+
+import "Shared/Google/Type/decimal.proto";
+import "Shared/BookingComponentDetail.proto";
+import "Shared/BookingStatus.proto";
+import "google/protobuf/wrappers.proto";
+
+package BookingPlatform.Gateway.Attraction;
+
+service BookingDetails {
+  rpc BookingDetails (BookingDetailsRequest) returns (BookingDetailsResponse);
+}
+
+message BookingDetailsRequest {
+  string TenantId = 1;
+  int32 BrandId = 2;
+  int32 SalesChannelId = 3;
+  string BookingReference = 4;
+}
+
+message BookingDetailsResponse {
+  string ClientName = 1;
+  string BrandName = 2;
+  string SalesChannelName = 3;
+  BookingPlatform.Gateway.Shared.BookingStatus Status = 4;
+  google.protobuf.StringValue PartnerBookingReference = 5;
+  string BookingDate = 6;
+  string CustomerFirstName = 7;
+  string CustomerLastName = 8;
+  string CustomerEmailAddress = 9;
+  string CustomerPhoneNumber = 10;
+  string CurrencyCode = 11;
+  google.type.Decimal TotalPrice = 12;
+  google.type.Decimal OriginalTotalPrice = 13;
+  google.type.Decimal PaidAmount = 14;
+  google.type.Decimal RefundAmount = 15;
+  repeated BookingPlatform.Gateway.Shared.BookingComponentDetail BookingComponentDetails = 16;
+}

@@ -1,0 +1,28 @@
+﻿syntax = "proto3";
+import "Attraction/Common/ProductDetail.proto";
+import "google/protobuf/wrappers.proto";
+
+package BookingPlatform.Gateway.Attraction;
+
+service Search {
+  rpc Search (SearchRequest) returns (SearchResponse);
+}
+
+message SearchRequest {
+  string TenantId = 1;
+  int32 BrandId = 2;
+  int32 SalesChannelId = 3;
+
+  string CurrencyCode = 4;
+  string LanguageCode = 5;
+
+  string StartDate = 6;
+  string EndDate = 7;
+
+  repeated int32 ProductIds = 8 [packed = false];
+  google.protobuf.Int32Value LocationId = 9;
+}
+
+message SearchResponse {
+  repeated BookingPlatform.Gateway.Attraction.Common.ProductDetail Results = 1;
+}

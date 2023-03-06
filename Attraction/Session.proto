@@ -1,0 +1,13 @@
+﻿syntax = "proto3";
+
+package BookingPlatform.Gateway.Attraction;
+
+service Session {
+  rpc Logout (LogoutRequest) returns (LogoutResponse);
+}
+
+message LogoutRequest {
+}
+
+message LogoutResponse {
+}

@@ -1,0 +1,23 @@
+﻿syntax = "proto3";
+import "Shared/PriceDetails.proto";
+import "Shared/CancellationPolicy.proto";
+
+package BookingPlatform.Gateway.Attraction;
+
+service PreBook {
+  rpc Prebook (PreBookRequest) returns (PreBookResponse);
+}
+
+message PreBookRequest {
+  string TenantId = 1;
+  int32 BrandId = 2;
+  int32 SalesChannelId = 3;
+  string OptionToken = 4;
+}
+
+message PreBookResponse {
+  string OptionBookToken = 1;
+  BookingPlatform.Gateway.Shared.PriceDetails PriceDetails = 2;
+  BookingPlatform.Gateway.Shared.CancellationPolicy CancellationPolicy = 3;
+  string CurrencyCode = 4;
+}

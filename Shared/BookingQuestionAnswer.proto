@@ -1,0 +1,14 @@
+﻿syntax = "proto3";
+
+import "Shared/GuestType.proto";
+import "google/protobuf/wrappers.proto";
+
+package BookingPlatform.Gateway.Shared;
+
+message BookingQuestionAnswer {
+  string QuestionId = 1; // id for the predefined question
+  string Answer = 2; // answer for the question, can be a string date, time or a chosen option id
+  google.protobuf.Int32Value TravellerNum = 3; // sequence number of the connected participant for grouping answers by participants
+  BookingPlatform.Gateway.Shared.GuestType GuestType = 4; // Guest type like ADULT or CHILD for the per traveller questions visual group titles
+  google.protobuf.StringValue Unit = 5;
+}

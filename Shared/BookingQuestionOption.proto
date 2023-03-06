@@ -1,0 +1,14 @@
+﻿syntax = "proto3";
+
+import "google/protobuf/wrappers.proto";
+
+package BookingPlatform.Gateway.Shared;
+
+message BookingQuestionOption
+{
+    string OptionId = 1; // usually the string value which will be sent down to supplier
+    string DisplayName = 2; //  has only content if the backend can gather information in translated format, otherwise the option id should have connected translation at ui
+    google.protobuf.StringValue DisplayDescription = 3; //  has only content if the backend can gather information in translated format, otherwise the option id should have connected translation at ui
+    google.protobuf.StringValue FilterValue = 4; // if the select field has a dependent rule connected to a different field this is the trigger value from the other field
+    bool AlwaysVisible = 5; // used for those technical select options which should not be filtered out from a select, default false
+}

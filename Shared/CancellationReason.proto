@@ -1,0 +1,9 @@
+﻿syntax = "proto3";
+
+package BookingPlatform.Gateway.Shared;
+
+/* Cancellation reason is representing a value for the cancellation reason select form element*/
+message CancellationReason {
+  string CancellationReasonText = 1; // Dropdown value for cancellation reason select
+  string CancellationReasonCode = 2; // Supplier specific cancellation reason code
+}
