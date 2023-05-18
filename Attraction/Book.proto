@@ -22,6 +22,7 @@ message BookRequest {
   BookingPlatform.Gateway.Shared.ContactInfo ContactInfo = 4;
   repeated BookingItem BookingItems = 5;
   google.protobuf.StringValue PartnerBookingReference = 6;
+  google.protobuf.StringValue PaymentReference = 7;
 }
 
 message BookResponse {

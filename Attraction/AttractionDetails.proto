@@ -36,20 +36,18 @@ message AttractionDetailsResponse {
   repeated AttractionAttribute Attributes = 16;
   repeated AgeBandModel AgeBands = 17;
   repeated string TicketTypes = 18;
-  google.type.Decimal FromPrice = 19;
-  google.protobuf.StringValue CurrencyCode = 20;
-  google.protobuf.StringValue CancellationPolicyDescription = 21;
-  repeated ReviewScore ReviewScoreBreakDown = 22;
-  repeated StartEndLocation StartLocations = 23;
-  repeated StartEndLocation EndLocations = 24;
-  repeated string SupportedLanguages = 25;
-  repeated OperatingHours ProductOperatingHours = 26;
-  google.protobuf.Int32Value DurationFromMinutes = 27;
-  google.protobuf.Int32Value DurationToMinutes = 28;
-  AttractionDetailItinerary Itinerary = 29;
-  int32 MinTravelersPerBooking = 30;
-  int32 MaxTravelersPerBooking = 31;
-  bool RequiresAdultForBooking = 32;
+  google.protobuf.StringValue CancellationPolicyDescription = 19;
+  repeated ReviewScore ReviewScoreBreakDown = 20;
+  repeated StartEndLocation StartLocations = 21;
+  repeated StartEndLocation EndLocations = 22;
+  repeated string SupportedLanguages = 23;
+  repeated OperatingHours ProductOperatingHours = 24;
+  google.protobuf.Int32Value DurationFromMinutes = 25;
+  google.protobuf.Int32Value DurationToMinutes = 26;
+  AttractionDetailItinerary Itinerary = 27;
+  int32 MinTravelersPerBooking = 28;
+  int32 MaxTravelersPerBooking = 29;
+  bool RequiresAdultForBooking = 30;
 }
 
 message InclusionExclusion {
