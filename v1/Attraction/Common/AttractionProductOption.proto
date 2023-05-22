@@ -6,7 +6,7 @@ import "google/protobuf/wrappers.proto";
 package BookingPlatform.v1.Attraction.Common;
 
 /* ProductOption is representing a full set of information of a selectable product option */
-message ProductOption {
+message AttractionProductOption {
   google.protobuf.StringValue ProductOptionCode = 1; // third party id of the option
   string CurrencyCode = 2; // currency code connected to all the the money amounts in this response
   google.protobuf.StringValue Title = 3; // title of the attraction option

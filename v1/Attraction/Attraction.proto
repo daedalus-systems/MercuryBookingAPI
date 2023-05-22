@@ -3,7 +3,7 @@ import "v1/Attraction/Common/ProductDetail.proto";
 import "v1/Shared/GuestConfiguration.proto";
 import "v1/Shared/Google/Type/decimal.proto";
 import "google/protobuf/wrappers.proto";
-import "v1/Attraction/Common/ProductOption.proto";
+import "v1/Attraction/Common/AttractionProductOption.proto";
 
 package BookingPlatform.v1.Attraction;
 
@@ -74,7 +74,7 @@ message AvailabilityRequest {
 }
 
 message AvailabilityResponse {
-  repeated BookingPlatform.v1.Attraction.Common.ProductOption ProductOptions = 1;
+  repeated BookingPlatform.v1.Attraction.Common.AttractionProductOption ProductOptions = 1;
 }
 
 message AttractionDetailsRequest {
