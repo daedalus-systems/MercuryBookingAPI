@@ -1,0 +1,14 @@
+﻿syntax = "proto3";
+
+package BookingPlatform.v1.Shared;
+
+enum BookingSessionStatus {
+    InitiatingPayment = 0;
+    PaymentInProgress = 1;
+    PaymentFailed = 2;
+    BookingInProgress = 3;
+    BookingCompleted = 4;
+    BookingFailed = 5;
+    RefundInProgress = 6;
+    Refunded = 7;
+}

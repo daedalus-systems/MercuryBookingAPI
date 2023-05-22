@@ -1,0 +1,13 @@
+﻿syntax = "proto3";
+
+package BookingPlatform.v1.Shared;
+
+enum GuestType {
+  Undefined = 0;
+  Traveller = 1;
+  Adult = 2;
+  Senior = 3;
+  Youth = 4;
+  Child = 5;
+  Infant = 6;
+}

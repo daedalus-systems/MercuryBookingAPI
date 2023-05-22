@@ -1,0 +1,18 @@
+﻿ syntax = "proto3";
+
+import "v1/Shared/BookingQuestionFormElement.proto";
+import "google/protobuf/wrappers.proto";
+
+package BookingPlatform.v1.Shared;
+
+/* CheckoutListItem holds all info to build a checkout page like booking questions and basic product and booking infos */
+message CheckoutListItem{
+  repeated BookingPlatform.v1.Shared.BookingQuestionFormElement BookingQuestions = 1; // form input descriptor list for information necessary to collect for the booking
+  google.protobuf.StringValue ProductTitle = 2; // Title of the product to book
+  google.protobuf.StringValue ProductMainImageUrl = 3; // Url of the product's main image
+  google.protobuf.StringValue ProductionOptionTitle = 4; // Title of the product option to book
+  string StartDate = 5; // start date of the attraction to book
+  google.protobuf.StringValue StartTime = 6; // chosen start time of the product option
+  google.protobuf.StringValue EndDate = 7;
+  google.protobuf.StringValue EndTime = 8;
+}

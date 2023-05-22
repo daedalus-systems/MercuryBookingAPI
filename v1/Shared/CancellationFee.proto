@@ -1,0 +1,11 @@
+﻿syntax = "proto3";
+
+import "v1/Shared/Google/Type/decimal.proto";
+
+package BookingPlatform.v1.Shared;
+
+message CancellationFee {
+   string StartTime = 1;
+   string EndTime = 2;
+   google.type.Decimal Amount = 3;
+}

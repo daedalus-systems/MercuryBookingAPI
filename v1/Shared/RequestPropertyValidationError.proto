@@ -1,0 +1,9 @@
+﻿syntax = "proto3";
+
+package BookingPlatform.v1.Shared;
+
+/* ProductOption is representing a full set of information of a selectable product option */
+message RequestPropertyValidationError {
+  string Path = 1; // object path for the request property
+  string Error = 2; // error description in words
+}

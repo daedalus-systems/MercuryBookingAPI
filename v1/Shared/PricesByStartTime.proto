@@ -1,0 +1,14 @@
+﻿syntax = "proto3";
+
+import "v1/Shared/PriceDetails.proto";
+import "google/protobuf/wrappers.proto";
+
+package BookingPlatform.v1.Shared;
+
+/* PricesByStartTime is representing a full set of price information of a selectable product option by start time */
+message PricesByStartTime{
+  google.protobuf.StringValue OptionPrebookToken = 1; // hashed token contains all necessary info for booking like the third party offer id to be used as a booking reference at the next step
+  google.protobuf.StringValue StartTime = 2; // the chosen start time for the attraction option
+  BookingPlatform.v1.Shared.PriceDetails PriceDetails = 3; // breakdown of the total price
+  bool Available = 4;
+}

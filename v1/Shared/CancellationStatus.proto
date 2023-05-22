@@ -1,0 +1,8 @@
+﻿syntax = "proto3";
+
+package BookingPlatform.v1.Shared;
+
+enum CancellationStatus {
+    Accepted = 0;
+    Declined = 1;
+}

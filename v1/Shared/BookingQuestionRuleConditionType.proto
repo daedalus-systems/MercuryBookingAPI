@@ -1,0 +1,11 @@
+﻿syntax = "proto3";
+
+package BookingPlatform.v1.Shared;
+
+enum BookingQuestionRuleConditionType{
+  REQUIRED_BY_VALUE = 0;
+  OPTIONS_FILTERED_BY_VALUE = 1;
+  SHOW_IF_VALUE = 2;
+  SHOW_IF_HAS_VALUE = 3;
+  VALUE_LINKED_TO = 4;
+}
