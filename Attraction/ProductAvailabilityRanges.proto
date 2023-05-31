@@ -1,0 +1,20 @@
+﻿syntax = "proto3";
+
+import "Shared/ProductAvailabilityRange.proto";
+
+package BookingPlatform.Gateway.Attraction;
+
+service ProductAvailabilityRanges {
+  rpc GetAvailableRanges (ProductAvailabilityRangesRequest) returns (ProductAvailabilityRangesResponse);
+}
+
+message ProductAvailabilityRangesRequest {
+  string TenantId = 1;
+  int32 BrandId = 2;
+  int32 SalesChannelId = 3;
+  int32 ProductId = 4;
+}
+
+message ProductAvailabilityRangesResponse {
+  repeated BookingPlatform.Gateway.Shared.ProductAvailabilityRange AvailableRanges = 1;
+}

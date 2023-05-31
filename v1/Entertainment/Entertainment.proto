@@ -1,0 +1,39 @@
+﻿syntax = "proto3";
+import "google/protobuf/wrappers.proto";
+
+package BookingPlatform.v1.Entertainment;
+
+
+service Entertainment {
+  rpc VenueInfo (VenueInfoRequest) returns (VenueInfoResponse);
+  rpc EventInfo (EventInfoRequest) returns (EventInfoResponse);
+}
+
+message VenueInfoRequest {
+  string TenantId = 1;
+  int32 BrandId = 2;
+  int32 SalesChannelId = 3;
+  string LanguageCode = 4;
+  int32 VenueId = 5;
+}
+
+message VenueInfoResponse {
+  string VenueName = 1;
+  string VenueLocation = 2;
+  google.protobuf.StringValue MainImageUrl = 3;
+}
+
+message EventInfoRequest {
+  string TenantId = 1;
+  int32 BrandId = 2;
+  int32 SalesChannelId = 3;
+  string LanguageCode = 4;
+  int32 EventId = 5;
+}
+
+message EventInfoResponse {
+  string EventName = 1;
+  string VenueName = 2;
+  string VenueLocation = 3;
+  google.protobuf.StringValue MainImageUrl = 4;
+}

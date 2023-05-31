@@ -2,6 +2,7 @@
 import "v1/Attraction/Common/ProductDetail.proto";
 import "v1/Shared/GuestConfiguration.proto";
 import "v1/Shared/Google/Type/decimal.proto";
+import "v1/Shared/ProductAvailabilityRange.proto";
 import "google/protobuf/wrappers.proto";
 import "v1/Attraction/Common/AttractionProductOption.proto";
 
@@ -13,6 +14,7 @@ service Attraction {
   rpc Availability (AvailabilityRequest) returns (AvailabilityResponse);
   rpc AttractionDetails (AttractionDetailsRequest) returns (AttractionDetailsResponse);
   rpc GetTopCategoryByLocation (GetTopCategoryByLocationRequest) returns (GetTopCategoryByLocationResponse);
+  rpc GetAvailableRanges (ProductAvailabilityRangesRequest) returns (ProductAvailabilityRangesResponse);
 }
 
 message AutoCompleteSearchRequest {
@@ -100,7 +102,7 @@ message AttractionDetailsResponse {
   repeated InclusionExclusion Inclusions = 12;
   repeated InclusionExclusion Exclusions = 13;
   repeated AdditionalDetail AdditionalDetails = 14;
-  repeated AttractionAttribute Attributes = 15; // ADJUST FIELD NUMBERING
+  repeated AttractionAttribute Attributes = 15;
   repeated AgeBandModel AgeBands = 16;
   repeated string TicketTypes = 17;
   google.protobuf.StringValue CancellationPolicyDescription = 18;
@@ -170,14 +172,36 @@ message AttractionDetailItinerary {
   repeated ItineraryItem ItineraryItems = 3;
   repeated ItineraryRoute ItineraryRoutes = 4;
   repeated ItineraryDay ItineraryDays = 5;
+  bool IsPrivateTour = 6;
+  bool IsSkipTheLine = 7;
+  ItineraryActivityInfo ItineraryActivityInfo = 8;
+}
+
+message ItineraryActivityInfo {
+  google.protobuf.StringValue Description = 1;
+  repeated FoodMenu FoodMenus = 2;
+  Location ActivityLocation = 3;
+  repeated Location PointOfInterestLocations = 4;
+}
+
+message FoodMenu{
+  google.protobuf.StringValue Course = 1;
+  google.protobuf.StringValue DishName = 2;
+  google.protobuf.StringValue DishDescription = 3;
 }
 
 message ItineraryDay {
   int32 DayNumber = 1;
   google.protobuf.StringValue Title = 2;
   repeated string Accommodations = 3;
-  repeated string FoodAndDrinks = 4;
+  repeated FoodAndDrink FoodAndDrinks = 4;
   repeated ItineraryItem ItineraryItems = 5;
+}
+
+message FoodAndDrink{
+  google.protobuf.StringValue Type = 1;
+  google.protobuf.StringValue TypeDescription = 2;
+  google.protobuf.StringValue Description = 3;
 }
 
 message ItineraryItem {
@@ -223,4 +247,15 @@ message TopCategoryItem {
   int32 SortOrder = 2;
   string AttributeName = 3;
   string ImageUrl = 4;
+}
+
+message ProductAvailabilityRangesRequest {
+  string TenantId = 1;
+  int32 BrandId = 2;
+  int32 SalesChannelId = 3;
+  int32 ProductId = 4;
+}
+
+message ProductAvailabilityRangesResponse {
+  repeated BookingPlatform.v1.Shared.ProductAvailabilityRange AvailableRanges = 1;
 }
