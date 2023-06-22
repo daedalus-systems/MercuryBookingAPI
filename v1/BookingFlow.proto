@@ -90,10 +90,14 @@ message BookingDetailsRequest {
   string TenantId = 1;
   int32 BrandId = 2;
   int32 SalesChannelId = 3;
-  string BookingReference = 4;
+  repeated string BookingReferences = 4;
 }
 
 message BookingDetailsResponse {
+  repeated BookingDetailsResponseItem BookingDetailsResponseItems = 1;
+}
+
+message BookingDetailsResponseItem {
   string ClientName = 1;
   string BrandName = 2;
   string SalesChannelName = 3;
@@ -191,6 +195,7 @@ message BookingSearchRequest {
   google.protobuf.StringValue ComponentType = 9;
   google.protobuf.BoolValue IsCustomerCancellation = 10;
   google.protobuf.StringValue BookingDateTo = 11;
+  google.protobuf.StringValue BookingReference = 12;
 }
 
 message BookingSearchResponseItem {

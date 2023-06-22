@@ -15,10 +15,14 @@ message BookingDetailsRequest {
   string TenantId = 1;
   int32 BrandId = 2;
   int32 SalesChannelId = 3;
-  string BookingReference = 4;
+  repeated string BookingReferences = 4;
 }
 
-message BookingDetailsResponse {
+message BookingDetailsResponse{
+  repeated BookingDetailsResponseItem BookingDetailsResponseItems = 1; 
+}
+
+message BookingDetailsResponseItem {
   string ClientName = 1;
   string BrandName = 2;
   string SalesChannelName = 3;

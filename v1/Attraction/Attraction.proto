@@ -12,6 +12,7 @@ service Attraction {
   rpc AutoComplete (AutoCompleteSearchRequest) returns (AutoCompleteSearchResponse);
   rpc Search (SearchRequest) returns (SearchResponse);
   rpc Availability (AvailabilityRequest) returns (AvailabilityResponse);
+  rpc AttractionInfo (AttractionInfoRequest) returns (AttractionInfoResponse);
   rpc AttractionDetails (AttractionDetailsRequest) returns (AttractionDetailsResponse);
   rpc GetTopCategoryByLocation (GetTopCategoryByLocationRequest) returns (GetTopCategoryByLocationResponse);
   rpc GetAvailableRanges (ProductAvailabilityRangesRequest) returns (ProductAvailabilityRangesResponse);
@@ -258,4 +259,26 @@ message ProductAvailabilityRangesRequest {
 
 message ProductAvailabilityRangesResponse {
   repeated BookingPlatform.v1.Shared.ProductAvailabilityRange AvailableRanges = 1;
+}
+
+message AttractionInfoRequest
+{
+  string TenantId = 1;
+  int32 BrandId = 2;
+  int32 SalesChannelId = 3;
+  string LanguageCode = 4;
+  repeated int32 ProductIds = 5;
+}
+
+message AttractionInfoResponse
+{
+  repeated AttractionInfoResponseItem AttractionInfoResponseItems = 1;
+}
+
+message AttractionInfoResponseItem
+{
+    int32 ProductId = 1;
+    string ProductName = 2;
+    google.protobuf.StringValue LocationName = 3;
+    google.protobuf.StringValue MainImageUrl = 4;
 }
