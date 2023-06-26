@@ -114,6 +114,7 @@ message BookingDetailsResponseItem {
   google.type.Decimal PaidAmount = 14;
   google.type.Decimal RefundAmount = 15;
   repeated BookingPlatform.v1.Shared.BookingComponentDetail BookingComponentDetails = 16;
+  string BookingReference = 17;
 }
 
 message PreCancelRequest {
