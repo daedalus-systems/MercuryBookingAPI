@@ -176,13 +176,13 @@ message AttractionDetailItinerary {
   bool IsPrivateTour = 6;
   bool IsSkipTheLine = 7;
   ItineraryActivityInfo ItineraryActivityInfo = 8;
+  repeated Location PointOfInterestLocations = 9;
 }
 
 message ItineraryActivityInfo {
   google.protobuf.StringValue Description = 1;
   repeated FoodMenu FoodMenus = 2;
   Location ActivityLocation = 3;
-  repeated Location PointOfInterestLocations = 4;
 }
 
 message FoodMenu{
