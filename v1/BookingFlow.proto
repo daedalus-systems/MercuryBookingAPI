@@ -115,6 +115,8 @@ message BookingDetailsResponseItem {
   google.type.Decimal RefundAmount = 15;
   repeated BookingPlatform.v1.Shared.BookingComponentDetail BookingComponentDetails = 16;
   string BookingReference = 17;
+  google.protobuf.Int32Value UserId = 18;
+  google.protobuf.StringValue CreatedBy = 19;
 }
 
 message PreCancelRequest {
@@ -197,6 +199,8 @@ message BookingSearchRequest {
   google.protobuf.BoolValue IsCustomerCancellation = 10;
   google.protobuf.StringValue BookingDateTo = 11;
   google.protobuf.StringValue BookingReference = 12;
+  google.protobuf.StringValue CustomerFirstName = 13;
+  google.protobuf.StringValue CustomerLastName = 14;
 }
 
 message BookingSearchResponseItem {
@@ -208,6 +212,10 @@ message BookingSearchResponseItem {
   string BookingDate = 6;
   string CustomerFirstName = 7;
   string CustomerLastName = 8;
+  string StartDate = 9;
+  google.protobuf.StringValue EndDate = 10;
+  string CurrencyCode = 11;  
+  google.type.Decimal TotalPrice = 12;
 }
 
 message BookingSearchResponse {

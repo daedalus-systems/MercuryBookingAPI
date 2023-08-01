@@ -8,6 +8,7 @@ package BookingPlatform.v1.Shared;
 message CancellationPolicy {
   repeated SupplierCancellationOptions SupplierCancellationOptions = 1;
   repeated BookingPlatform.v1.Shared.CancellationFee CancellationFees = 2;
+  string TimeZone = 3;
 }
 
 message SupplierCancellationOptions {

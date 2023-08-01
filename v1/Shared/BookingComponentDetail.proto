@@ -4,6 +4,7 @@ import "google/protobuf/wrappers.proto";
 import "v1/Shared/Google/Type/decimal.proto";
 import "v1/Shared/BookingStatus.proto";
 import "v1/Shared/ProductOption.proto";
+import "v1/Shared/CancellationPolicy.proto";
 
 package BookingPlatform.v1.Shared;
 
@@ -23,4 +24,7 @@ message BookingComponentDetail {
   google.protobuf.StringValue CancelReason = 13;
   google.protobuf.StringValue CancelDate = 14;
   google.protobuf.BoolValue IsCustomerCancellation = 15;
+  string SupplierName = 16;
+  google.protobuf.StringValue SupplierBookingReference = 17;
+  BookingPlatform.v1.Shared.CancellationPolicy CancellationPolicy = 18;
 }
