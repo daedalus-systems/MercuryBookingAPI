@@ -201,6 +201,7 @@ message BookingSearchRequest {
   google.protobuf.StringValue BookingReference = 12;
   google.protobuf.StringValue CustomerFirstName = 13;
   google.protobuf.StringValue CustomerLastName = 14;
+  google.protobuf.StringValue CreatedBy = 15;
 }
 
 message BookingSearchResponseItem {
@@ -216,6 +217,7 @@ message BookingSearchResponseItem {
   google.protobuf.StringValue EndDate = 10;
   string CurrencyCode = 11;  
   google.type.Decimal TotalPrice = 12;
+  google.protobuf.StringValue CreatedBy = 13;
 }
 
 message BookingSearchResponse {

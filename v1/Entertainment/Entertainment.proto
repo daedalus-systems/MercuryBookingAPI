@@ -1,12 +1,58 @@
 ﻿syntax = "proto3";
+
 import "google/protobuf/wrappers.proto";
+import "v1/Shared/Google/Type/decimal.proto";
 
 package BookingPlatform.v1.Entertainment;
 
-
 service Entertainment {
+  rpc Autocomplete (AutocompleteRequest) returns (AutoCompleteResponse);
+  rpc Search (SearchRequest) returns (SearchResponse);
   rpc VenueInfo (VenueInfoRequest) returns (VenueInfoResponse);
   rpc EventInfo (EventInfoRequest) returns (EventInfoResponse);
+  rpc SearchPagination (SearchPaginationRequest) returns (SearchPaginationResponse);
+  rpc GetPerformances (GetPerformancesRequest) returns (GetPerformancesResponse);
+  rpc GetPerformanceAvailabilities (GetPerformanceAvailabilitiesRequest) returns (stream GetPerformanceAvailabilitiesResponse);
+  rpc PerformerInfo (PerformerInfoRequest) returns (PerformerInfoResponse);
+  rpc EventDetails (EventDetailsRequest) returns (EventDetailsResponse);
+}
+
+message AutocompleteRequest {
+  string TenantId = 1;
+  int32 BrandId = 2;
+  int32 SalesChannelId = 3;
+  string LanguageCode = 4;
+  repeated AutocompleteCategory Categories = 5;
+  string SearchString = 6;
+  optional Geolocation Geolocation = 7;
+}
+
+enum AutocompleteCategory {
+  EVENT = 0;
+  EVENT_LOCATION = 1;
+  EVENT_VENUE = 2;
+  EVENT_PERFORMER = 3;
+}
+
+message Geolocation {
+  google.type.Decimal Latitude = 1;
+  google.type.Decimal Longitude = 2;
+}
+
+message AutoCompleteResponse {
+  repeated AutoCompleteResultByCategory Categories = 1;
+}
+
+message AutoCompleteResultByCategory {
+  AutocompleteCategory Category = 1;
+  repeated AutoCompleteResultItem Results = 2;
+}
+
+message AutoCompleteResultItem {
+  string Name = 1;
+  int32 Id = 2;
+  google.protobuf.StringValue AdditionalData = 3;
+  Geolocation Geolocation = 4;
 }
 
 message VenueInfoRequest {
@@ -36,4 +82,183 @@ message EventInfoResponse {
   string VenueName = 2;
   string VenueLocation = 3;
   google.protobuf.StringValue MainImageUrl = 4;
+}
+
+message SearchRequest {
+  string TenantId = 1;
+  int32 BrandId = 2;
+  int32 SalesChannelId = 3;
+  int32 LocationId = 4;  // mandatory (and disregarded if SearchType is EVENT or VENUE)
+  google.protobuf.Int32Value EventId = 5;  // for Event search
+  google.protobuf.Int32Value PerformerId = 6;  // for Performer search
+  google.protobuf.Int32Value VenueId = 7;  // for Venue search
+  google.protobuf.StringValue StartDate = 8;  // yyyy-MM-dd, can be empty
+  google.protobuf.StringValue EndDate = 9;  // yyyy-MM-dd, can be empty
+  SearchCategory SearchCategory = 10;  // a major category
+  int32 PageSize = 11;  // submit 20.
+}
+
+message SearchResponse {
+  int32 NumberOfResults = 1;  // Sent for paging purposes.
+  int32 PageSize = 2;
+  repeated PerformanceResult Results = 3;  // This component is paged.
+  repeated PerformanceResult ExtendedResults = 4;  // Performances from the country if not enough results at the location. Not paged.
+  string SearchToken = 5;  // Search token for paging, will contain all search parameters.
+}
+
+
+message SearchPaginationRequest {
+  string TenantId = 1;
+  int32 BrandId = 2;
+  int32 SalesChannelId = 3;
+  string SearchToken = 4;  // the token received from the Search request, that is supposed to contain all search parameters.
+  int32 PageIndex = 5;  // index starts from 0
+}
+
+message SearchPaginationResponse {
+  repeated PerformanceResult Results = 1;
+}
+
+message PerformanceResult {
+  int32 PerformanceId = 1;
+  string Date = 2;  // yyyy-MM-dd
+  string Time = 3; // hh:mm
+  string EventName = 4;
+  int32 EventId = 5;
+  repeated Performer Performers = 6;
+  string VenueName = 7;
+  int32 VenueId = 8;
+  string LocationName = 9;
+  int32 LocationId = 10;
+}
+
+
+message Performer {
+  string PerformerName = 1;
+  int32 PerformerId = 2;
+}
+
+enum SearchType {
+  SEARCHTYPE_LOCATION = 0;
+  SEARCHTYPE_EVENT = 1;
+  SEARCHTYPE_PERFORMER = 2;
+  SEARCHTYPE_VENUE = 3;
+}
+
+enum SearchCategory {
+  ALL = 0;
+  CONCERT = 1;
+  ART_AND_THEATER = 2;
+  SPORT = 3;
+  FAMILY = 4;
+}
+
+
+message GetPerformancesRequest {
+  int32 EventId = 1;
+  google.protobuf.StringValue StartDate = 2;  // yyyy-MM-dd, optional
+  google.protobuf.StringValue EndDate = 3;  // yyyy-MM-dd, optional
+  google.protobuf.Int32Value PerformanceId = 4;  // optional
+
+  // added for consistency
+  string TenantId = 5;
+	int32 BrandId = 6;
+	int32 SalesChannelId = 7;
+}
+
+message GetPerformancesResponse {
+  repeated CalendarPerformance Performances = 1;
+}
+
+message CalendarPerformance {
+  int32 PerformanceId = 1;
+  string Date = 2;  // yyyy-MM-dd
+  string Time = 3;  // hh:mm
+}
+
+message GetPerformanceAvailabilitiesRequest {
+	string TenantId = 1;
+	int32 BrandId = 2;
+	int32 SalesChannelId = 3;
+	repeated int32 PerformanceIds = 4;
+  string LanguageCode = 5;
+  string CurrencyCode = 6;
+}
+
+message GetPerformanceAvailabilitiesResponse {
+    repeated SupplierPerformanceAvailability SupplierPerformanceAvailabilities = 1;
+}
+
+message SupplierPerformanceAvailability {
+    int32 PerformanceId = 1;
+    string SupplierName = 2;
+    repeated string SuppliersForPerformance = 3;
+    AvailabilityStatus Availability = 4;
+    google.protobuf.StringValue RedirectLink = 5;
+    optional AvailabilityDetails AvailabilityDetails = 6;
+}
+
+message AvailabilityDetails {
+    repeated TicketType TicketTypes = 1;
+    string CurrencyCode = 2;
+}
+
+message TicketType {
+    string TicketTypeCode = 1;
+    string TicketTypeName = 2;
+    google.protobuf.StringValue TicketTypeDescription = 3;
+    repeated PriceBand PriceBands = 4;
+    repeated int32 ValidQuantities = 5;
+}
+
+message PriceBand {
+  string TicketToken = 1;  // contains all the info that is necessary to reserve a ticket.
+  google.protobuf.StringValue PriceBandCode = 2;
+  google.type.Decimal  TotalPrice = 3;  // Total price in selling currency including the margin.
+  int32 TicketsAvailable = 4;
+  bool IsOnSale = 5;
+  google.protobuf.StringValue OnSaleStart = 6;
+  google.protobuf.StringValue OnSaleEnd = 7;
+}
+
+enum AvailabilityStatus {
+	UNAVAILABLE = 0;
+	AVAILABLE = 1;
+	ON_REQUEST = 2;
+}
+
+message PerformerInfoRequest {
+  string TenantId = 1;
+  int32 BrandId = 2;
+  int32 SalesChannelId = 3;
+  string LanguageCode = 4;
+  int32 PerformerId = 5;
+}
+
+message PerformerInfoResponse {
+  string PerformerName = 1;
+  google.protobuf.StringValue MainImageUrl = 2;
+}
+
+message EventDetailsRequest {
+  string TenantId = 1;
+  int32 BrandId = 2;
+  int32 SalesChannelId = 3;
+  string LanguageCode = 4;
+  int32 EventId = 5;
+}
+
+message EventDetailsResponse {
+  string EventName = 1;
+  google.protobuf.StringValue MainImageUrl = 2;
+  repeated string EventImages = 3;
+  repeated SearchCategory EventCategories = 4;
+  Venue Venue = 5;
+  repeated Performer Performers = 6;
+}
+
+message Venue {
+  int32 VenueId = 1;
+  string VenueName = 2;
+  string VenueLocation = 3;
 }
