@@ -1,5 +1,6 @@
 ﻿syntax = "proto3";
 import "v1/Shared/Phone.proto";
+import "google/protobuf/wrappers.proto";
 
 package BookingPlatform.v1.Shared;
 
@@ -8,4 +9,7 @@ message ContactInfo {
    BookingPlatform.v1.Shared.Phone Phone = 2;
    string FirstName = 3;
    string LastName = 4;
+   google.protobuf.StringValue Address = 5;
+   google.protobuf.StringValue ZipCode = 6;
+   google.protobuf.StringValue Country = 7;
 }

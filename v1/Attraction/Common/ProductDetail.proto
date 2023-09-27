@@ -19,4 +19,5 @@ message ProductDetail {
    google.type.Decimal FromPrice = 12;
    string CurrencyCode = 13;
    repeated int32 AttributeIdList = 14;
+   google.type.Decimal Ranking = 15;
 }

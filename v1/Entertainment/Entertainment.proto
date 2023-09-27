@@ -15,6 +15,8 @@ service Entertainment {
   rpc GetPerformanceAvailabilities (GetPerformanceAvailabilitiesRequest) returns (stream GetPerformanceAvailabilitiesResponse);
   rpc PerformerInfo (PerformerInfoRequest) returns (PerformerInfoResponse);
   rpc EventDetails (EventDetailsRequest) returns (EventDetailsResponse);
+  rpc ReserveTickets (ReserveTicketsRequest) returns (ReserveTicketsResponse);
+  rpc CancelReservation (CancelReservationRequest) returns (CancelReservationResponse);
 }
 
 message AutocompleteRequest {
@@ -67,6 +69,7 @@ message VenueInfoResponse {
   string VenueName = 1;
   string VenueLocation = 2;
   google.protobuf.StringValue MainImageUrl = 3;
+  google.protobuf.StringValue VenueAddress = 4;
 }
 
 message EventInfoRequest {
@@ -82,6 +85,7 @@ message EventInfoResponse {
   string VenueName = 2;
   string VenueLocation = 3;
   google.protobuf.StringValue MainImageUrl = 4;
+  google.protobuf.StringValue VenueAddress = 5;
 }
 
 message SearchRequest {
@@ -261,4 +265,48 @@ message Venue {
   int32 VenueId = 1;
   string VenueName = 2;
   string VenueLocation = 3;
+  google.protobuf.StringValue VenueAddress = 4;
+}
+
+message ReserveTicketsRequest {
+  string TenantId = 1;
+	int32 BrandId = 2;
+	int32 SalesChannelId = 3;
+  int32 PerformanceId = 4;
+  repeated ItemToReserve Tickets = 5;
+  string CurrencyCode = 6;
+  google.protobuf.StringValue TicketSendMethod = 7;
+}
+
+message ItemToReserve {
+  string TicketToken = 1;
+  int32 Quantity = 2;
+}
+
+message ReserveTicketsResponse {
+  repeated ReservedItem ReservedItems = 1;
+  bool IsPriceChange = 2;
+  google.type.Decimal TicketSendCost = 3;
+  string BookToken = 4;
+  string TokenExpiry = 5;
+  repeated string AllowedCountries = 6;
+}
+
+message ReservedItem {
+  string TicketToken = 1;
+  string TicketTypeCode = 2;
+  google.type.Decimal TicketPrice = 3;
+  google.protobuf.StringValue PriceBandCode = 4;
+  int32 Quantity = 5;
+}
+
+message CancelReservationRequest {
+  string TenantId = 1;
+  int32 BrandId = 2;
+  int32 SalesChannelId = 3;
+  string BookToken = 4;  // expected to contain a SupplierName and a ReservationId
+}
+
+message CancelReservationResponse {
+    bool Success = 1;
 }
