@@ -100,6 +100,7 @@ message SearchRequest {
   google.protobuf.StringValue EndDate = 9;  // yyyy-MM-dd, can be empty
   SearchCategory SearchCategory = 10;  // a major category
   int32 PageSize = 11;  // submit 20.
+  google.protobuf.StringValue LanguageCode = 12;
 }
 
 message SearchResponse {
