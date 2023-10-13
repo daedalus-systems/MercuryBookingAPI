@@ -12,4 +12,5 @@ message ContactInfo {
    google.protobuf.StringValue Address = 5;
    google.protobuf.StringValue ZipCode = 6;
    google.protobuf.StringValue Country = 7;
+   google.protobuf.StringValue City = 8;
 }

@@ -98,7 +98,7 @@ message SearchRequest {
   google.protobuf.Int32Value VenueId = 7;  // for Venue search
   google.protobuf.StringValue StartDate = 8;  // yyyy-MM-dd, can be empty
   google.protobuf.StringValue EndDate = 9;  // yyyy-MM-dd, can be empty
-  SearchCategory SearchCategory = 10;  // a major category
+  repeated SearchCategory SearchCategories = 10;  // major categories
   int32 PageSize = 11;  // submit 20.
   google.protobuf.StringValue LanguageCode = 12;
 }
@@ -151,11 +151,10 @@ enum SearchType {
 }
 
 enum SearchCategory {
-  ALL = 0;
-  CONCERT = 1;
-  ART_AND_THEATER = 2;
-  SPORT = 3;
-  FAMILY = 4;
+  CONCERT = 0;
+  ART_AND_THEATER = 1;
+  SPORT = 2;
+  FAMILY = 3;
 }
 
 
