@@ -1,5 +1,12 @@
 # MercuryBookingAPI
 
+## 2023/10/20
+### Entertainments
+  * Search now applies SearchCategory filtering for all type of search (not just Location).
+  * When Searching by EventId, ExtendedResults may now contain performances from the same Venue when better matches are not found.
+  * When Searching by PerformerId, ExtendedResults may now contain performances regardless of location.
+  * Fixed an issue which caused Search to sporadically fail.
+
 ## 2023/10/13
 ### Entertainments
   * Search now accepts a list of SearchCategories. Empty list of SearchCategories apply no filtering on the resultset. Multiple SearchCategories in the list returns performances that belong to any of the provided categories ('OR' relationship).
