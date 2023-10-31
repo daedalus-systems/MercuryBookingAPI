@@ -276,6 +276,7 @@ message ReserveTicketsRequest {
   repeated ItemToReserve Tickets = 5;
   string CurrencyCode = 6;
   google.protobuf.StringValue TicketSendMethod = 7;
+  google.protobuf.StringValue LanguageCode = 8;
 }
 
 message ItemToReserve {
