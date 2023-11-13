@@ -155,7 +155,6 @@ message GetPerformancesRequest {
   google.protobuf.StringValue EndDate = 3;  // yyyy-MM-dd, optional
   google.protobuf.Int32Value PerformanceId = 4;  // optional
 
-  // added for consistency
   string TenantId = 5;
 	int32 BrandId = 6;
 	int32 SalesChannelId = 7;
@@ -296,7 +295,7 @@ message CancelReservationRequest {
   string TenantId = 1;
   int32 BrandId = 2;
   int32 SalesChannelId = 3;
-  string BookToken = 4;  // expected to contain a SupplierName and a ReservationId
+  string BookToken = 4;
 }
 
 message CancelReservationResponse {

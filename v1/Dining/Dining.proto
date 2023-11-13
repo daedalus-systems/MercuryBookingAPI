@@ -41,9 +41,9 @@ message VenueAvailabilityRequest {
   int32 BrandId = 2;
   int32 SalesChannelId = 3; 
   repeated int32 VenueIds = 4;
-  string Date = 5;  // eg. 2023-01-31
-  string StartTime = 6;  // eg. 23:59
-  string EndTime = 7;  // eg. 23:59
+  string Date = 5; 
+  string StartTime = 6;
+  string EndTime = 7;
   int32 NumberOfGuests = 8;
 }
 
@@ -63,7 +63,7 @@ enum AvailabilityStatus {
   ON_REQUEST = 2;
 }
 message TimeSlot {
-  string Time = 1;  // format: 24-hour "00:00". Availabilities are always requested for a single day
-  google.protobuf.StringValue SlotType = 2;  // value comes from 3rd party, eg. "Exterior table" (not i18n-able)
-  google.protobuf.StringValue BookingToken = 3;  // also contains the info about the supplier
+  string Time = 1;
+  google.protobuf.StringValue SlotType = 2;
+  google.protobuf.StringValue BookingToken = 3;
 }
