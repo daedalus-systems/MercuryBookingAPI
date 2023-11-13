@@ -2,6 +2,8 @@
 
 import "google/protobuf/wrappers.proto";
 import "v1/Shared/Google/Type/decimal.proto";
+import "v1/Shared/Geolocation.proto";
+import "v1/Shared/AutoCompleteResultItem.proto";
 
 package BookingPlatform.v1.Entertainment;
 
@@ -17,6 +19,7 @@ service Entertainment {
   rpc EventDetails (EventDetailsRequest) returns (EventDetailsResponse);
   rpc ReserveTickets (ReserveTicketsRequest) returns (ReserveTicketsResponse);
   rpc CancelReservation (CancelReservationRequest) returns (CancelReservationResponse);
+  rpc SearchEvents (SearchEventsRequest) returns (SearchEventsResponse);
 }
 
 message AutocompleteRequest {
@@ -26,7 +29,7 @@ message AutocompleteRequest {
   string LanguageCode = 4;
   repeated AutocompleteCategory Categories = 5;
   string SearchString = 6;
-  optional Geolocation Geolocation = 7;
+  optional BookingPlatform.v1.Shared.Geolocation Geolocation = 7;
 }
 
 enum AutocompleteCategory {
@@ -36,25 +39,13 @@ enum AutocompleteCategory {
   EVENT_PERFORMER = 3;
 }
 
-message Geolocation {
-  google.type.Decimal Latitude = 1;
-  google.type.Decimal Longitude = 2;
-}
-
 message AutoCompleteResponse {
   repeated AutoCompleteResultByCategory Categories = 1;
 }
 
 message AutoCompleteResultByCategory {
   AutocompleteCategory Category = 1;
-  repeated AutoCompleteResultItem Results = 2;
-}
-
-message AutoCompleteResultItem {
-  string Name = 1;
-  int32 Id = 2;
-  google.protobuf.StringValue AdditionalData = 3;
-  Geolocation Geolocation = 4;
+  repeated BookingPlatform.v1.Shared.AutoCompleteResultItem Results = 2;
 }
 
 message VenueInfoRequest {
@@ -219,7 +210,7 @@ message PriceBand {
   string TicketToken = 1;  // contains all the info that is necessary to reserve a ticket.
   google.protobuf.StringValue PriceBandCode = 2;
   google.type.Decimal  TotalPrice = 3;  // Total price in selling currency including the margin.
-  int32 TicketsAvailable = 4;
+  google.protobuf.Int32Value TicketsAvailable = 4;
   bool IsOnSale = 5;
   google.protobuf.StringValue OnSaleStart = 6;
   google.protobuf.StringValue OnSaleEnd = 7;
@@ -310,4 +301,26 @@ message CancelReservationRequest {
 
 message CancelReservationResponse {
     bool Success = 1;
+}
+
+message SearchEventsRequest {
+  string TenantId = 1;
+  int32 BrandId = 2;
+  int32 SalesChannelId = 3; 
+  BookingPlatform.v1.Shared.Geolocation Geolocation = 4;  
+  int32 NumberOfEvents = 5;
+  repeated SearchCategory SearchCategories = 6;
+  string LanguageCode = 7;
+}
+
+message SearchEventsResponse {
+  repeated EventItem EventItems = 1;
+}
+
+message EventItem {
+  int32 EventId = 1;
+  string EventName = 2;
+  string VenueLocation = 3;
+  google.protobuf.StringValue MainImageURL = 4;
+  repeated int32 AttributeIds = 5;
 }

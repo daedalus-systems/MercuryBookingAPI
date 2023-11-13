@@ -27,4 +27,18 @@ message BookingComponentDetail {
   string SupplierName = 16;
   google.protobuf.StringValue SupplierBookingReference = 17;
   BookingPlatform.v1.Shared.CancellationPolicy CancellationPolicy = 18;
+  optional EntertainmentProductOptions EntertainmentProductOptions = 19;
+}
+
+message EntertainmentProductOptions
+{
+  int32 PerformanceId = 1;
+  repeated BookedTicket Tickets = 2;
+}
+
+message BookedTicket
+{
+  string TicketTypeName = 1;
+  google.protobuf.StringValue PriceBandCode = 2;
+  int32 Quantity = 3;
 }

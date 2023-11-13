@@ -1,0 +1,69 @@
+﻿syntax = "proto3";
+
+import "google/protobuf/wrappers.proto";
+import "v1/Shared/Google/Type/decimal.proto";
+import "v1/Shared/Geolocation.proto";
+import "v1/Shared/AutoCompleteResultItem.proto";
+
+package BookingPlatform.v1.Dining;
+
+service Dining {
+  rpc Autocomplete (AutocompleteRequest) returns (AutocompleteResponse);
+  rpc VenueAvailability (VenueAvailabilityRequest) returns (VenueAvailabilityResponse);
+}
+
+message AutocompleteRequest {
+  string TenantId = 1;
+  int32 BrandId = 2;
+  int32 SalesChannelId = 3;
+  string LanguageCode = 4;  
+  repeated AutocompleteCategory Categories = 5;
+  string SearchString = 6;
+  optional BookingPlatform.v1.Shared.Geolocation Geolocation = 7;
+}
+
+enum AutocompleteCategory {
+  DINING_LOCATION = 0;
+  DINING_VENUE = 1;
+}
+
+message AutoCompleteResultByCategory {
+  AutocompleteCategory Category = 1;  // this is the differing part.
+  repeated BookingPlatform.v1.Shared.AutoCompleteResultItem Results = 2;
+}
+
+message AutocompleteResponse {
+  repeated AutoCompleteResultByCategory Categories = 1;
+}
+
+message VenueAvailabilityRequest {
+  string TenantId = 1;
+  int32 BrandId = 2;
+  int32 SalesChannelId = 3; 
+  repeated int32 VenueIds = 4;
+  string Date = 5;  // eg. 2023-01-31
+  string StartTime = 6;  // eg. 23:59
+  string EndTime = 7;  // eg. 23:59
+  int32 NumberOfGuests = 8;
+}
+
+message VenueAvailabilityResponse {
+  repeated VenueAvailabilityItem Venues = 1;
+}
+
+message VenueAvailabilityItem {
+  int32 VenueId = 1;
+  AvailabilityStatus AvailabilityStatus = 2;
+  repeated TimeSlot TimeSlots = 3;
+}
+
+enum AvailabilityStatus {
+  AVAILABLE = 0;
+  UNAVAILABLE = 1;
+  ON_REQUEST = 2;
+}
+message TimeSlot {
+  string Time = 1;  // format: 24-hour "00:00". Availabilities are always requested for a single day
+  google.protobuf.StringValue SlotType = 2;  // value comes from 3rd party, eg. "Exterior table" (not i18n-able)
+  google.protobuf.StringValue BookingToken = 3;  // also contains the info about the supplier
+}

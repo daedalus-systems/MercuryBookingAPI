@@ -1,0 +1,14 @@
+﻿syntax = "proto3";
+
+import "google/protobuf/wrappers.proto";
+import "v1/Shared/Google/Type/decimal.proto";
+import "v1/Shared/Geolocation.proto";
+
+package BookingPlatform.v1.Shared;
+
+message AutoCompleteResultItem {
+  string Name = 1;
+  int32 Id = 2;
+  google.protobuf.StringValue AdditionalData = 3;
+  BookingPlatform.v1.Shared.Geolocation Geolocation = 4;
+}
