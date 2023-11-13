@@ -3,7 +3,7 @@
 ## 2023/11/13
 ### Entertainment
   * Added SearchEvents endpoint.
-  * TicketsAvailable is now nullable in GetPerformanceAvailabilitiesResponse, **null indicating unlimited** amount of tickets availability for the Priceband. (SupplierPerformanceAvailabilities/AvailabilityDetails/TicketTypes/PriceBands/TicketsAvailable)
+  * TicketsAvailable is now nullable in GetPerformanceAvailabilitiesResponse, **null indicating unlimited** amount of tickets available for the Priceband. (SupplierPerformanceAvailabilities/AvailabilityDetails/TicketTypes/PriceBands/TicketsAvailable)
 
 ### BookingFlow
   * BookingDetails has been extended with EntertainmentProductOptions for entertainment specific details. (BookingDetailsResponseItems/BookingComponentDetails/EntertainmentProductOptions)
