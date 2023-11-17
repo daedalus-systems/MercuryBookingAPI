@@ -53,30 +53,39 @@ message VenueInfoRequest {
   int32 BrandId = 2;
   int32 SalesChannelId = 3;
   string LanguageCode = 4;
-  int32 VenueId = 5;
+  repeated int32 VenueIds = 5;
 }
 
 message VenueInfoResponse {
-  string VenueName = 1;
-  string VenueLocation = 2;
-  google.protobuf.StringValue MainImageUrl = 3;
-  google.protobuf.StringValue VenueAddress = 4;
+  repeated VenueInfoEntity Venues = 1;
 }
+message VenueInfoEntity {
+  int32 VenueId = 1;
+  string VenueName = 2;
+  string VenueLocation = 3;
+  google.protobuf.StringValue MainImageUrl = 4;
+  google.protobuf.StringValue VenueAddress = 5;
+} 
 
 message EventInfoRequest {
   string TenantId = 1;
   int32 BrandId = 2;
   int32 SalesChannelId = 3;
   string LanguageCode = 4;
-  int32 EventId = 5;
+  repeated int32 EventIds = 5;
 }
 
 message EventInfoResponse {
-  string EventName = 1;
-  string VenueName = 2;
-  string VenueLocation = 3;
-  google.protobuf.StringValue MainImageUrl = 4;
-  google.protobuf.StringValue VenueAddress = 5;
+  repeated EventInfoEntity Events = 1;
+}
+
+message EventInfoEntity {
+  int32 EventId = 1;
+  string EventName = 2;
+  string VenueName = 3;
+  string VenueLocation = 4;
+  google.protobuf.StringValue MainImageUrl = 5;
+  google.protobuf.StringValue VenueAddress = 6;
 }
 
 message SearchRequest {
@@ -226,12 +235,17 @@ message PerformerInfoRequest {
   int32 BrandId = 2;
   int32 SalesChannelId = 3;
   string LanguageCode = 4;
-  int32 PerformerId = 5;
+  repeated int32 PerformerIds = 5;
 }
 
 message PerformerInfoResponse {
-  string PerformerName = 1;
-  google.protobuf.StringValue MainImageUrl = 2;
+  repeated PerformerInfoEntity Performers = 1;
+}
+
+message PerformerInfoEntity {
+  int32 PerformerId = 1;
+  string PerformerName = 2;
+  google.protobuf.StringValue MainImageUrl = 3;
 }
 
 message EventDetailsRequest {
@@ -249,6 +263,7 @@ message EventDetailsResponse {
   repeated SearchCategory EventCategories = 4;
   Venue Venue = 5;
   repeated Performer Performers = 6;
+  google.protobuf.StringValue Description = 7;
 }
 
 message Venue {
@@ -256,6 +271,7 @@ message Venue {
   string VenueName = 2;
   string VenueLocation = 3;
   google.protobuf.StringValue VenueAddress = 4;
+  google.protobuf.StringValue StaticSeatmapUrl = 5;
 }
 
 message ReserveTicketsRequest {
