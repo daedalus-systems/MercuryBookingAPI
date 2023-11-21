@@ -65,7 +65,7 @@ message VenueInfoEntity {
   string VenueLocation = 3;
   google.protobuf.StringValue MainImageUrl = 4;
   google.protobuf.StringValue VenueAddress = 5;
-} 
+}
 
 message EventInfoRequest {
   string TenantId = 1;
@@ -199,6 +199,8 @@ message SupplierPerformanceAvailability {
     AvailabilityStatus Availability = 4;
     google.protobuf.StringValue RedirectLink = 5;
     optional AvailabilityDetails AvailabilityDetails = 6;
+    google.type.Decimal FromPrice = 7;
+    google.protobuf.StringValue PromoCode = 8;
 }
 
 message AvailabilityDetails {
@@ -297,6 +299,7 @@ message ReserveTicketsResponse {
   string BookToken = 4;
   string TokenExpiry = 5;
   repeated string AllowedCountries = 6;
+  google.type.Decimal TotalPrice = 7;
 }
 
 message ReservedItem {
@@ -321,8 +324,8 @@ message CancelReservationResponse {
 message SearchEventsRequest {
   string TenantId = 1;
   int32 BrandId = 2;
-  int32 SalesChannelId = 3; 
-  BookingPlatform.v1.Shared.Geolocation Geolocation = 4;  
+  int32 SalesChannelId = 3;
+  BookingPlatform.v1.Shared.Geolocation Geolocation = 4;
   int32 NumberOfEvents = 5;
   repeated SearchCategory SearchCategories = 6;
   string LanguageCode = 7;
