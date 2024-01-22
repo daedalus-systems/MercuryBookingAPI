@@ -219,7 +219,7 @@ message TicketType {
 message PriceBand {
   string TicketToken = 1;  // contains all the info that is necessary to reserve a ticket.
   google.protobuf.StringValue PriceBandCode = 2;
-  google.type.Decimal  TotalPrice = 3;  // Total price in selling currency including the margin.
+  google.type.Decimal  TicketPrice = 3;  // Total price in selling currency including the margin.
   google.protobuf.Int32Value TicketsAvailable = 4;
   bool IsOnSale = 5;
   google.protobuf.StringValue OnSaleStart = 6;

@@ -9,7 +9,7 @@ package BookingPlatform.v1.Dining;
 
 service Dining {
   rpc Autocomplete (AutocompleteRequest) returns (AutocompleteResponse);
-  rpc VenueAvailability (VenueAvailabilityRequest) returns (VenueAvailabilityResponse);
+  rpc GetVenueAvailabilities (GetVenueAvailabilitiesRequest) returns (GetVenueAvailabilitiesResponse);
 }
 
 message AutocompleteRequest {
@@ -25,6 +25,7 @@ message AutocompleteRequest {
 enum AutocompleteCategory {
   DINING_LOCATION = 0;
   DINING_VENUE = 1;
+  DINING_ATTRIBUTE = 2;
 }
 
 message AutoCompleteResultByCategory {
@@ -36,18 +37,19 @@ message AutocompleteResponse {
   repeated AutoCompleteResultByCategory Categories = 1;
 }
 
-message VenueAvailabilityRequest {
+message GetVenueAvailabilitiesRequest {
   string TenantId = 1;
   int32 BrandId = 2;
   int32 SalesChannelId = 3; 
   repeated int32 VenueIds = 4;
-  string Date = 5; 
-  string StartTime = 6;
-  string EndTime = 7;
-  int32 NumberOfGuests = 8;
+  string Date = 5;  // eg. 2023-01-31
+  google.protobuf.StringValue Time = 6;
+  google.protobuf.StringValue StartTime = 7;  // eg. 23:59
+  google.protobuf.StringValue EndTime = 8;  // eg. 23:59
+  int32 NumberOfGuests = 9;
 }
 
-message VenueAvailabilityResponse {
+message GetVenueAvailabilitiesResponse {
   repeated VenueAvailabilityItem Venues = 1;
 }
 
@@ -63,7 +65,7 @@ enum AvailabilityStatus {
   ON_REQUEST = 2;
 }
 message TimeSlot {
-  string Time = 1;
-  google.protobuf.StringValue SlotType = 2;
-  google.protobuf.StringValue BookingToken = 3;
+  string Time = 1;  // format: 24-hour "00:00". Availabilities are always requested for a single day
+  google.protobuf.StringValue SlotType = 2;  // value comes from 3rd party, eg. "Exterior table" (not i18n-able)
+  google.protobuf.StringValue BookingToken = 3;  // also contains the info about the supplier
 }
