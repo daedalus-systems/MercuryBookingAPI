@@ -86,6 +86,7 @@ message EventInfoEntity {
   string VenueLocation = 4;
   google.protobuf.StringValue MainImageUrl = 5;
   google.protobuf.StringValue VenueAddress = 6;
+  repeated Performer Performers = 7;
 }
 
 message SearchRequest {
@@ -205,7 +206,9 @@ message SupplierPerformanceAvailability {
 
 message AvailabilityDetails {
     repeated TicketType TicketTypes = 1;
-    string CurrencyCode = 2;
+    string CurrencyCode = 2;       
+    optional SendMethod DefaultSendMethod = 3;
+    repeated SendMethod AvailableSendMethods = 4;
 }
 
 message TicketType {
@@ -230,6 +233,13 @@ enum AvailabilityStatus {
 	UNAVAILABLE = 0;
 	AVAILABLE = 1;
 	ON_REQUEST = 2;
+}
+
+message SendMethod {
+  string SendMethodCode = 1;
+  string SendMethodDescription = 2;
+  google.type.Decimal Cost = 3;
+  repeated string AllowedCountries = 4;
 }
 
 message PerformerInfoRequest {
