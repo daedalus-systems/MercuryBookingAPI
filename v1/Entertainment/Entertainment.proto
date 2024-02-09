@@ -87,6 +87,7 @@ message EventInfoEntity {
   google.protobuf.StringValue MainImageUrl = 5;
   google.protobuf.StringValue VenueAddress = 6;
   repeated Performer Performers = 7;
+  repeated int32 AttributeIds = 8;
 }
 
 message SearchRequest {
@@ -136,8 +137,8 @@ message PerformanceResult {
   int32 VenueId = 8;
   string LocationName = 9;
   int32 LocationId = 10;
+  repeated int32 AttributeIds = 11;
 }
-
 
 message Performer {
   string PerformerName = 1;
