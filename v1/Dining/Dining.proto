@@ -10,13 +10,59 @@ package BookingPlatform.v1.Dining;
 service Dining {
   rpc Autocomplete (AutocompleteRequest) returns (AutocompleteResponse);
   rpc GetVenueAvailabilities (GetVenueAvailabilitiesRequest) returns (GetVenueAvailabilitiesResponse);
+  rpc Search (SearchRequest) returns (stream SearchResponse);
+  rpc StartPayment (StartPaymentRequest) returns (StartPaymentResponse);
+}
+
+message SearchRequest{
+  string TenantId = 1;
+  int32 BrandId = 2;
+  int32 SalesChannelId = 3;
+  string LanguageCode = 4;
+  google.protobuf.Int32Value LocationId = 5;
+  optional Shared.Geolocation Geolocation = 6;
+  repeated int32 VenueIds = 7;
+  int32 PageSize = 8;
+  int32 MaxNumberOfNonAvailableVenues = 9;
+  RequestedAvailability RequestedAvailability = 10;
+  repeated int32 AttributeIds = 11;
+  optional google.type.Decimal MaxDistance = 12;
+  SortBy SortBy = 13;
+}
+
+message RequestedAvailability{
+  string Date = 1;
+  string Time = 2;
+  int32 NumberOfGuests = 3;
+}
+
+enum SortBy {
+  DEFAULT = 0;
+  RATING = 1;
+  DISTANCE = 2;
+}
+
+message SearchResponse{
+  google.protobuf.StringValue SearchToken = 1;
+  repeated VenueItem Venues = 2;
+}
+
+message VenueItem {
+  int32 VenueId = 1;
+  string VenueName = 2;
+  string Location = 3;
+  repeated int32 AttributeIds = 4;
+  google.protobuf.StringValue ImageUrl = 6;
+  AvailabilityStatus AvailabilityStatus = 7;
+  google.type.Decimal Ranking = 8;
+  optional google.type.Decimal Distance = 9; // Distance from the reference point in km's - If search is based on location (id or coordinates) 
 }
 
 message AutocompleteRequest {
   string TenantId = 1;
   int32 BrandId = 2;
   int32 SalesChannelId = 3;
-  string LanguageCode = 4;  
+  string LanguageCode = 4;
   repeated AutocompleteCategory Categories = 5;
   string SearchString = 6;
   optional BookingPlatform.v1.Shared.Geolocation Geolocation = 7;
@@ -40,7 +86,7 @@ message AutocompleteResponse {
 message GetVenueAvailabilitiesRequest {
   string TenantId = 1;
   int32 BrandId = 2;
-  int32 SalesChannelId = 3; 
+  int32 SalesChannelId = 3;
   repeated int32 VenueIds = 4;
   string Date = 5;  // eg. 2023-01-31
   google.protobuf.StringValue Time = 6;
@@ -63,9 +109,32 @@ enum AvailabilityStatus {
   AVAILABLE = 0;
   UNAVAILABLE = 1;
   ON_REQUEST = 2;
+  UNDEFINED = 3;
 }
+
 message TimeSlot {
-  string Time = 1;  // format: 24-hour "00:00". Availabilities are always requested for a single day
-  google.protobuf.StringValue SlotType = 2;  // value comes from 3rd party, eg. "Exterior table" (not i18n-able)
-  google.protobuf.StringValue BookingToken = 3;  // also contains the info about the supplier
+  string Time = 1; 
+  google.protobuf.StringValue SlotType = 2;  
+  PaymentRule PaymentRule = 3;
+  google.protobuf.StringValue BookingToken = 4;
+}
+
+enum PaymentRule {
+  NoPayment = 0;
+  AdvancedPayment = 1;
+  SaveForLater = 2;
+}
+
+message StartPaymentRequest {
+  string TenantId = 1;
+  int32 BrandId = 2;
+  int32 SalesChannelId = 3;
+  string BookToken = 4;
+}
+
+message StartPaymentResponse {
+  string PublishableKey = 1;
+  string AccountId = 2;
+  string ClientSecret = 3;
+  string BookToken = 4;
 }
