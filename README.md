@@ -1,5 +1,10 @@
 # MercuryBookingAPI
 
+## 2024/02/19
+### Dining
+  * Add SearchNextPage and VenueDetails endpoints.
+  * Smaller updates.
+
 ## 2024/02/14
 ### Dining
   * Update and extend contract with Search and StartPayment.
