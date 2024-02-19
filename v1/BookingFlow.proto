@@ -84,6 +84,7 @@ message CheckBookingSessionStatusResponse
 {
   BookingPlatform.v1.Shared.BookingSessionStatus BookingStatus = 1;
   google.protobuf.StringValue BookingReference = 2;
+  google.protobuf.StringValue ErrorMessage = 3;
 }
 
 message BookingDetailsRequest {

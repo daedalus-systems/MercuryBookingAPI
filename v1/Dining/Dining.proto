@@ -10,7 +10,9 @@ package BookingPlatform.v1.Dining;
 service Dining {
   rpc Autocomplete (AutocompleteRequest) returns (AutocompleteResponse);
   rpc GetVenueAvailabilities (GetVenueAvailabilitiesRequest) returns (GetVenueAvailabilitiesResponse);
+  rpc VenueDetails (VenueDetailsRequest) returns (VenueDetailsResponse);
   rpc Search (SearchRequest) returns (stream SearchResponse);
+  rpc SearchNextPage (SearchNextPageRequest) returns (stream SearchResponse);
   rpc StartPayment (StartPaymentRequest) returns (StartPaymentResponse);
 }
 
@@ -56,6 +58,14 @@ message VenueItem {
   AvailabilityStatus AvailabilityStatus = 7;
   google.type.Decimal Ranking = 8;
   optional google.type.Decimal Distance = 9; // Distance from the reference point in km's - If search is based on location (id or coordinates) 
+  repeated TimeSlot TimeSlots = 10;
+}
+
+message SearchNextPageRequest{
+  string TenantId = 1;
+  int32 BrandId = 2;
+  int32 SalesChannelId = 3;
+  string SearchToken = 4;
 }
 
 message AutocompleteRequest {
@@ -113,10 +123,17 @@ enum AvailabilityStatus {
 }
 
 message TimeSlot {
-  string Time = 1; 
-  google.protobuf.StringValue SlotType = 2;  
+  string Time = 1;
+  google.protobuf.StringValue SlotType = 2;
   PaymentRule PaymentRule = 3;
-  google.protobuf.StringValue BookingToken = 4;
+  google.type.Decimal TotalReserveCost = 4;
+  google.type.Decimal PregratuityTotal = 5;
+  google.type.Decimal MandatedGratuityAmount = 6;
+  google.type.Decimal Gratuity = 7;
+  google.type.Decimal SubTotal = 8;
+  google.type.Decimal TaxAmount = 9;
+  google.type.Decimal ServiceChargeAmount = 10;
+  google.protobuf.StringValue BookingToken = 11;
 }
 
 enum PaymentRule {
@@ -137,4 +154,28 @@ message StartPaymentResponse {
   string AccountId = 2;
   string ClientSecret = 3;
   string BookToken = 4;
+}
+
+message VenueDetailsRequest {
+  string TenantId = 1;
+  int32 BrandId = 2;
+  int32 SalesChannelId = 3;
+  string LanguageCode = 4;
+  int32 VenueId = 5;
+}
+
+message VenueDetailsResponse {
+  string Name = 1;
+  string LocationName = 2;
+  string Address = 3;
+  BookingPlatform.v1.Shared.Geolocation Geolocation = 4;
+  repeated string Images = 5;
+  repeated Attribute Attributes = 6;
+  google.protobuf.StringValue Description = 8;
+}
+
+message Attribute {
+  int32 Id = 1;
+  string Type = 2;
+  string Name = 3;
 }
