@@ -1,0 +1,14 @@
+﻿syntax = "proto3";
+
+package BookingPlatform.v1;
+
+service User {
+  rpc CheckUser (CheckUserRequest) returns (CheckUserResponse);
+}
+
+
+message CheckUserRequest {}
+
+message CheckUserResponse {
+  bool Successful = 1;
+}

@@ -1,0 +1,44 @@
+﻿syntax = "proto3";
+
+import "google/protobuf/wrappers.proto";
+import "v1/Shared/Google/Type/decimal.proto";
+import "v1/Shared/BookingStatus.proto";
+import "v1/Shared/ProductOption.proto";
+import "v1/Shared/CancellationPolicy.proto";
+
+package BookingPlatform.v1.Shared;
+
+message BookingComponentDetail {
+  string BookingComponentReference = 1;
+  string ComponentType = 2;
+  int32 ProductId = 3;
+  repeated BookingPlatform.v1.Shared.ProductOption ProductOptions = 4;
+  BookingPlatform.v1.Shared.BookingStatus ComponentStatus = 5;
+  string StartDate = 6;
+  google.protobuf.StringValue StartTime = 7;
+  google.protobuf.StringValue EndDate = 8; 
+  google.protobuf.StringValue EndTime = 9; 
+  google.protobuf.StringValue VoucherUrl = 10;
+  google.type.Decimal TotalPrice = 11;
+  google.type.Decimal OriginalTotalPrice = 12;
+  google.protobuf.StringValue CancelReason = 13;
+  google.protobuf.StringValue CancelDate = 14;
+  google.protobuf.BoolValue IsCustomerCancellation = 15;
+  string SupplierName = 16;
+  google.protobuf.StringValue SupplierBookingReference = 17;
+  BookingPlatform.v1.Shared.CancellationPolicy CancellationPolicy = 18;
+  optional EntertainmentProductOptions EntertainmentProductOptions = 19;
+}
+
+message EntertainmentProductOptions
+{
+  int32 PerformanceId = 1;
+  repeated BookedTicket Tickets = 2;
+}
+
+message BookedTicket
+{
+  string TicketTypeName = 1;
+  google.protobuf.StringValue PriceBandCode = 2;
+  int32 Quantity = 3;
+}

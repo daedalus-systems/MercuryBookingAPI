@@ -1,0 +1,249 @@
+﻿syntax = "proto3";
+
+import "v1/Shared/PriceDetails.proto";
+import "v1/Shared/CancellationPolicy.proto";
+import "v1/Shared/ContactInfo.proto";
+import "v1/Shared/PaymentSession.proto";
+import "v1/Shared/CheckoutListItem.proto";
+import "v1/Shared/BookingQuestionAnswer.proto";
+import "v1/Shared/BookingQuestionValidationError.proto";
+import "v1/Shared/RequestPropertyValidationError.proto";
+import "v1/Shared/BookingSessionStatus.proto";
+import "google/protobuf/wrappers.proto";
+import "v1/Shared/Google/Type/decimal.proto";
+import "v1/Shared/BookingComponentDetail.proto";
+import "v1/Shared/BookingStatus.proto";
+import "v1/Shared/CustomerCancellationReason.proto";
+import "v1/Shared/CancellationStatus.proto";
+
+package BookingPlatform.v1;
+
+service BookingFlow {
+  rpc Prebook (PreBookRequest) returns (PreBookResponse);
+  rpc Checkout (CheckoutRequest) returns (CheckoutResponse);
+  rpc ValidateBooking (BookingValidationRequest) returns (BookingValidationResponse);
+  rpc Book (BookRequest) returns (BookResponse);
+  rpc CheckBookingSessionStatus (CheckBookingSessionStatusRequest) returns (CheckBookingSessionStatusResponse);
+  rpc BookingSearch (BookingSearchRequest) returns (BookingSearchResponse);
+  rpc BookingDetails (BookingDetailsRequest) returns (BookingDetailsResponse);
+  rpc PreCancel (PreCancelRequest) returns (PreCancelResponse);
+  rpc Cancel (CancelRequest) returns (CancelResponse);
+  rpc GetBrandsAndSalesChannelsForTenant (GetBrandsAndSalesChannelsForTenantRequest) returns (GetBrandsAndSalesChannelsForTenantResponse);
+}
+
+message PreBookRequest {
+  string TenantId = 1;
+  int32 BrandId = 2;
+  int32 SalesChannelId = 3;
+  string OptionToken = 4;
+}
+
+message PreBookResponse {
+  string OptionBookToken = 1;
+  BookingPlatform.v1.Shared.PriceDetails PriceDetails = 2;
+  BookingPlatform.v1.Shared.CancellationPolicy CancellationPolicy = 3;
+  string CurrencyCode = 4;
+}
+
+message CheckoutRequest {
+  string TenantId = 1; // representing the connecting partner who made the actual integration
+  int32 BrandId = 2; // defining the brand under the the integrating partner
+  int32 SalesChannelId = 3; // the actual source of the request like web or personal call
+  repeated string OptionBookTokens = 4; // hashed token given by the prebook contains all necessary data for third party book request
+}
+
+message CheckoutResponse
+{
+  repeated BookingPlatform.v1.Shared.CheckoutListItem CheckoutListItems = 1; // form input descriptor list for information necessary to collect for the booking
+}
+
+message BookingValidationRequest {
+  string TenantId = 1;
+  int32 BrandId = 2;
+  int32 SalesChannelId = 3;
+  string OptionToken = 4;
+  BookingPlatform.v1.Shared.ContactInfo ContactInfo = 5;
+  repeated BookingPlatform.v1.Shared.BookingQuestionAnswer BookingQuestionAnswers = 6; 
+}
+
+message BookingValidationResponse
+{
+  bool IsValid = 1; // is the book request valid
+  repeated BookingPlatform.v1.Shared.BookingQuestionValidationError BookingQuestionValidationErrors = 2; // list of validation errors by the field name and path
+  repeated BookingPlatform.v1.Shared.RequestPropertyValidationError RequestPropertyValidationErrors = 3; // list of validation errors by the field name and path
+}
+
+message CheckBookingSessionStatusRequest {
+  string TenantId = 1;
+  int32 BrandId = 2;
+  int32 SalesChannelId = 3;
+  string BookingSessionId = 4;
+}
+
+message CheckBookingSessionStatusResponse
+{
+  BookingPlatform.v1.Shared.BookingSessionStatus BookingStatus = 1;
+  google.protobuf.StringValue BookingReference = 2;
+}
+
+message BookingDetailsRequest {
+  string TenantId = 1;
+  int32 BrandId = 2;
+  int32 SalesChannelId = 3;
+  repeated string BookingReferences = 4;
+}
+
+message BookingDetailsResponse {
+  repeated BookingDetailsResponseItem BookingDetailsResponseItems = 1;
+}
+
+message BookingDetailsResponseItem {
+  string ClientName = 1;
+  string BrandName = 2;
+  string SalesChannelName = 3;
+  BookingPlatform.v1.Shared.BookingStatus Status = 4;
+  google.protobuf.StringValue PartnerBookingReference = 5;
+  string BookingDate = 6;
+  string CustomerFirstName = 7;
+  string CustomerLastName = 8;
+  string CustomerEmailAddress = 9;
+  string CustomerPhoneNumber = 10;
+  string CurrencyCode = 11;
+  google.type.Decimal TotalPrice = 12;
+  google.type.Decimal OriginalTotalPrice = 13;
+  google.type.Decimal PaidAmount = 14;
+  google.type.Decimal RefundAmount = 15;
+  repeated BookingPlatform.v1.Shared.BookingComponentDetail BookingComponentDetails = 16;
+  string BookingReference = 17;
+  google.protobuf.Int32Value UserId = 18;
+  google.protobuf.StringValue CreatedBy = 19;
+  google.protobuf.StringValue CustomerAddress = 20;
+  google.protobuf.StringValue CustomerZipCode = 21;
+  google.protobuf.StringValue CustomerCountry = 22;
+  google.protobuf.StringValue CustomerCity = 23;
+}
+
+message PreCancelRequest {
+  string TenantId = 1;
+  int32 BrandId = 2;
+  int32 SalesChannelId = 3;
+  string BookingReference = 4;
+}
+
+message PreCancelResponse {
+  string BookingReference = 1;
+  string CurrencyCode = 2;
+  repeated BookingComponent BookingComponents = 3;
+}
+
+message BookingComponent
+{
+  string BookingComponentReference = 1;
+  bool IsCancellationAllowed = 2;
+  google.type.Decimal CancellationFee = 3;
+  repeated BookingPlatform.v1.Shared.CustomerCancellationReason CustomerCancellationReasons = 4;
+}
+
+message CancelRequest {
+  string TenantId = 1;
+  int32 BrandId = 2;
+  int32 SalesChannelId = 3;
+  string BookingReference = 4;
+  repeated CancellationItem BookingComponents = 5;
+}
+
+message CancelResponse {
+  string BookingReference = 1;
+  string CurrencyCode = 2;
+  repeated CancellationResult BookingComponents = 3;
+}
+
+/* Cancellation reason is representing a value for the cancellation reason select form element*/
+message CancellationItem {
+  string BookingComponentReference = 1;
+  google.protobuf.StringValue CancellationReasonCode = 2; // Supplier specific cancellation reason code
+}
+
+message CancellationResult {
+  string BookingComponentReference = 1;
+  BookingPlatform.v1.Shared.CancellationStatus CancellationStatus = 2;
+  google.protobuf.StringValue ReasonForDecline = 3;
+  google.type.Decimal CancellationFee = 4;
+}
+
+message GetBrandsAndSalesChannelsForTenantRequest {
+  string TenantId = 1;
+}
+
+message BrandId {
+  int32 Id = 1;
+  string Name = 2;
+}
+
+message SalesChannelId {
+  int32 Id = 1;
+  string Name = 2;
+}
+
+message GetBrandsAndSalesChannelsForTenantResponse {
+  repeated BrandId BrandIds = 1;
+  repeated SalesChannelId SalesChannelIds = 2;
+}
+
+message BookingSearchRequest {
+  string TenantId = 1;
+  google.protobuf.Int32Value BrandId = 2;
+  google.protobuf.Int32Value SalesChannelId = 3;
+  google.protobuf.StringValue PartnerBookingReference = 4;
+  google.protobuf.StringValue BookingStatus = 5;
+  google.protobuf.StringValue BookingDateFrom = 6;
+  google.protobuf.StringValue StartDateFrom = 7;
+  google.protobuf.StringValue StartDateTo = 8;
+  google.protobuf.StringValue ComponentType = 9;
+  google.protobuf.BoolValue IsCustomerCancellation = 10;
+  google.protobuf.StringValue BookingDateTo = 11;
+  google.protobuf.StringValue BookingReference = 12;
+  google.protobuf.StringValue CustomerFirstName = 13;
+  google.protobuf.StringValue CustomerLastName = 14;
+  google.protobuf.StringValue CreatedBy = 15;
+}
+
+message BookingSearchResponseItem {
+  string BookingReference = 1;
+  string BrandName = 2;
+  string SalesChannelName = 3;
+  string BookingStatus = 4;
+  google.protobuf.StringValue PartnerBookingReference = 5;
+  string BookingDate = 6;
+  string CustomerFirstName = 7;
+  string CustomerLastName = 8;
+  string StartDate = 9;
+  google.protobuf.StringValue EndDate = 10;
+  string CurrencyCode = 11;  
+  google.type.Decimal TotalPrice = 12;
+  google.protobuf.StringValue CreatedBy = 13;
+}
+
+message BookingSearchResponse {
+  repeated BookingSearchResponseItem BookingSearchResponseItems = 1;
+}
+
+message BookingItem {
+  string OptionBookToken = 1;
+  repeated BookingPlatform.v1.Shared.BookingQuestionAnswer BookingQuestionAnswers = 3;
+}
+
+message BookRequest {
+  string TenantId = 1;
+  int32 BrandId = 2;
+  int32 SalesChannelId = 3;
+  BookingPlatform.v1.Shared.ContactInfo ContactInfo = 4;
+  repeated BookingItem BookingItems = 5;
+  google.protobuf.StringValue PartnerBookingReference = 6;
+  google.protobuf.StringValue PaymentReference = 7;
+}
+
+message BookResponse {
+  string BookingSessionId = 1;
+  BookingPlatform.v1.Shared.PaymentSession PaymentSession = 2;
+}

@@ -6,6 +6,38 @@ package BookingPlatform.Gateway.Attraction;
 
 service Search {
   rpc Search (SearchRequest) returns (SearchResponse);
+  rpc GetBrandsAndSalesChannelsForTenant (GetBrandsAndSalesChannelsForTenantRequest) returns (GetBrandsAndSalesChannelsForTenantResponse);
+  rpc BookingSearch (BookingSearchRequest) returns (BookingSearchResponse);
+}
+
+message BookingSearchRequest {
+  string TenantId = 1;
+  google.protobuf.Int32Value BrandId = 2;
+  google.protobuf.Int32Value SalesChannelId = 3;
+  google.protobuf.StringValue PartnerBookingReference = 4;
+  google.protobuf.StringValue BookingStatus = 5;
+  google.protobuf.StringValue BookingDateFrom = 6;
+  google.protobuf.StringValue TravelDateFrom = 7;
+  google.protobuf.StringValue TravelDateTo = 8;
+  google.protobuf.StringValue ComponentType = 9;
+  google.protobuf.BoolValue IsCustomerCancellation = 10;
+  google.protobuf.StringValue BookingDateTo = 11;
+
+}
+
+message BookingSearchResponseItem {
+  string BookingReference = 1;
+  string BrandName = 2;
+  string SalesChannelName = 3;
+  string BookingStatus = 4;
+  google.protobuf.StringValue PartnerBookingReference = 5;
+  string BookingDate = 6;
+  string CustomerFirstName = 7;
+  string CustomerLastName = 8;
+}
+
+message BookingSearchResponse {
+  repeated BookingSearchResponseItem BookingSearchResponseItems = 1;
 }
 
 message SearchRequest {
@@ -25,4 +57,23 @@ message SearchRequest {
 
 message SearchResponse {
   repeated BookingPlatform.Gateway.Attraction.Common.ProductDetail Results = 1;
+}
+
+message GetBrandsAndSalesChannelsForTenantRequest {
+  string TenantId = 1;
+}
+
+message BrandId {
+  int32 Id = 1;
+  string Name = 2;
+}
+
+message SalesChannelId {
+  int32 Id = 1;
+  string Name = 2;
+}
+
+message GetBrandsAndSalesChannelsForTenantResponse {
+  repeated BrandId BrandIds = 1;
+  repeated SalesChannelId SalesChannelIds = 2;
 }

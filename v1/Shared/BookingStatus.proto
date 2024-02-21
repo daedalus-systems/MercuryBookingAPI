@@ -1,0 +1,12 @@
+﻿syntax = "proto3";
+
+package BookingPlatform.v1.Shared;
+
+enum BookingStatus {
+    Confirmed = 0;
+    Rejected = 1;
+    Cancelled = 2;
+    Pending = 3;
+    InProgress = 4;
+    Failed = 5;
+}

@@ -1,0 +1,48 @@
+﻿syntax = "proto3";
+import "Shared/Google/Type/decimal.proto";
+import "google/protobuf/wrappers.proto";
+
+package BookingPlatform.Gateway.Entertainment;
+
+service EntertainmentAutocomplete {
+  rpc AutocompleteSearch (AutocompleteRequest) returns (AutoCompleteResultsByCategory);
+}
+
+
+message AutocompleteRequest {
+  string TenantId = 1;
+  int32 BrandId = 2;
+  int32 SalesChannelId = 3;
+  string LanguageCode = 4;
+  repeated AutocompleteCategory Categories = 5;
+  string SearchString = 6;
+  Geolocation Geolocation = 7;
+}
+
+enum AutocompleteCategory {
+  EVENT = 0;
+  EVENT_LOCATION = 1;
+  EVENT_VENUE = 2;
+  EVENT_PERFORMER = 3;
+}
+
+message Geolocation {
+  google.type.Decimal Latitude = 1;
+  google.type.Decimal Longitude = 2;
+}
+
+message AutoCompleteResultsByCategory {
+  repeated AutoCompleteResultByCategory Categories = 1;
+}
+
+message AutoCompleteResultByCategory {
+  AutocompleteCategory Category = 1;
+  repeated AutoCompleteResultItem Results = 2;
+}
+
+message AutoCompleteResultItem {
+  string Name = 1;
+  int32 Id = 2;
+  google.protobuf.StringValue AdditionalData = 3;
+  Geolocation Geolocation = 4;
+}

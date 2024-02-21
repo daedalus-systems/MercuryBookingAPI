@@ -1,0 +1,22 @@
+﻿syntax = "proto3";
+
+import "google/protobuf/wrappers.proto";
+import "v1/Shared/CancellationFee.proto";
+
+package BookingPlatform.v1.Shared;
+
+message CancellationPolicy {
+  repeated SupplierCancellationOptions SupplierCancellationOptions = 1;
+  repeated BookingPlatform.v1.Shared.CancellationFee CancellationFees = 2;
+  string TimeZone = 3;
+}
+
+message SupplierCancellationOptions {
+  SupplierCancellationReason SupplierCancellationReason = 1;
+  google.protobuf.StringValue Description = 2;
+}
+
+enum SupplierCancellationReason {
+  Bad_Weather = 0;
+  Insufficient_Travelers = 1;
+}

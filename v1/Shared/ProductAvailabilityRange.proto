@@ -1,0 +1,10 @@
+syntax = "proto3";
+
+import "google/protobuf/wrappers.proto";
+
+package BookingPlatform.v1.Shared;
+
+message ProductAvailabilityRange {
+  string StartDate = 1;
+  google.protobuf.StringValue EndDate = 2;
+}

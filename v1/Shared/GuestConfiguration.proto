@@ -1,0 +1,10 @@
+﻿syntax = "proto3";
+
+import "v1/Shared/GuestType.proto";
+
+package BookingPlatform.v1.Shared;
+
+message GuestConfiguration {
+   BookingPlatform.v1.Shared.GuestType GuestType = 1;
+   int32 GuestTypeNumber = 2;
+}

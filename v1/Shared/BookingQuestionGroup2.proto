@@ -1,0 +1,12 @@
+﻿syntax = "proto3";
+
+package BookingPlatform.v1.Shared;
+
+enum BookingQuestionGroup2 {
+  UNDEFINED = 0;
+  PICKUP = 1;
+  ARRIVAL = 2;
+  DEPARTURE = 3;
+  GENERAL = 4;
+  GUEST = 5;
+}

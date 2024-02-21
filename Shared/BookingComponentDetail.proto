@@ -15,7 +15,7 @@ message BookingComponentDetail {
   BookingPlatform.Gateway.Shared.BookingStatus ComponentStatus = 5;
   string TravelDate = 6;
   google.protobuf.StringValue StartTime = 7;
-  string VoucherUrl = 8;
+  google.protobuf.StringValue VoucherUrl = 8;
   repeated BookingPlatform.Gateway.Shared.GuestConfiguration Occupancies = 9;
   google.type.Decimal TotalPrice = 10;
   google.type.Decimal OriginalTotalPrice = 11;

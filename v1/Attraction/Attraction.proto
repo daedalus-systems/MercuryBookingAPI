@@ -1,0 +1,284 @@
+﻿syntax = "proto3";
+import "v1/Attraction/Common/ProductDetail.proto";
+import "v1/Shared/GuestConfiguration.proto";
+import "v1/Shared/Google/Type/decimal.proto";
+import "v1/Shared/ProductAvailabilityRange.proto";
+import "google/protobuf/wrappers.proto";
+import "v1/Attraction/Common/AttractionProductOption.proto";
+
+package BookingPlatform.v1.Attraction;
+
+service Attraction {
+  rpc AutoComplete (AutoCompleteSearchRequest) returns (AutoCompleteSearchResponse);
+  rpc Search (SearchRequest) returns (SearchResponse);
+  rpc Availability (AvailabilityRequest) returns (AvailabilityResponse);
+  rpc AttractionInfo (AttractionInfoRequest) returns (AttractionInfoResponse);
+  rpc AttractionDetails (AttractionDetailsRequest) returns (AttractionDetailsResponse);
+  rpc GetTopCategoryByLocation (GetTopCategoryByLocationRequest) returns (GetTopCategoryByLocationResponse);
+  rpc GetAvailableRanges (ProductAvailabilityRangesRequest) returns (ProductAvailabilityRangesResponse);
+}
+
+message AutoCompleteSearchRequest {
+  string TenantId = 1;
+  int32 BrandId = 2;
+  int32 SalesChannelId = 3;
+  string LanguageCode = 4;
+  repeated Category Categories = 5;
+  string SearchString = 6;
+}
+
+message AutoCompleteSearchResponse {
+  repeated AutoCompleteResultsByCategories Categories = 1;
+}
+
+message AutoCompleteResultsByCategories {
+  Category Category = 1;
+  repeated AutoCompleteResultItem Results = 2;
+}
+
+message AutoCompleteResultItem {
+  string Name = 1;
+  int32 Id = 2;
+}
+
+enum Category {
+  ATTRACTION = 0;
+  ATTRACTION_LOCATION = 1;
+}
+
+message SearchRequest {
+  string TenantId = 1;
+  int32 BrandId = 2;
+  int32 SalesChannelId = 3;
+
+  string CurrencyCode = 4;
+  string LanguageCode = 5;
+
+  string StartDate = 6;
+  string EndDate = 7;
+
+  repeated int32 ProductIds = 8 [packed = false];
+  google.protobuf.Int32Value LocationId = 9;
+}
+
+message SearchResponse {
+  repeated BookingPlatform.v1.Attraction.Common.ProductDetail Results = 1;
+}
+
+message AvailabilityRequest {
+  string TenantId = 1;
+  int32 BrandId = 2;
+  int32 SalesChannelId = 3;
+  string CurrencyCode = 4;
+  string LanguageCode = 5;
+  string TravelDate = 6;
+  int32 ProductId = 7;
+  repeated BookingPlatform.v1.Shared.GuestConfiguration Guests = 8;
+}
+
+message AvailabilityResponse {
+  repeated BookingPlatform.v1.Attraction.Common.AttractionProductOption ProductOptions = 1;
+}
+
+message AttractionDetailsRequest {
+  string TenantId = 1;
+  int32 BrandId = 2;
+  int32 SalesChannelId = 3;
+  string LanguageCode = 4;
+  int32 ProductId = 5;
+}
+
+message AttractionDetailsResponse {
+  int32 ProductId = 1;
+  google.protobuf.StringValue LanguageCode = 2;
+  google.protobuf.StringValue ProductName = 3;
+  google.protobuf.StringValue LocationName = 4;
+  google.type.Decimal ReviewRating = 5;
+  google.protobuf.Int32Value TotalReviews = 6;
+  repeated Image Images = 7;
+  google.type.Decimal Longitude = 8;
+  google.type.Decimal Latitude = 9;
+  google.protobuf.StringValue TimeZone = 10;
+  google.protobuf.StringValue Description = 11;
+  repeated InclusionExclusion Inclusions = 12;
+  repeated InclusionExclusion Exclusions = 13;
+  repeated AdditionalDetail AdditionalDetails = 14;
+  repeated AttractionAttribute Attributes = 15;
+  repeated AgeBandModel AgeBands = 16;
+  repeated string TicketTypes = 17;
+  google.protobuf.StringValue CancellationPolicyDescription = 18;
+  repeated ReviewScore ReviewScoreBreakDown = 19;
+  repeated Location StartLocations = 20;
+  repeated Location EndLocations = 21;
+  repeated string SupportedLanguages = 22;
+  repeated OperatingHours ProductOperatingHours = 23;
+  google.protobuf.Int32Value DurationFromMinutes = 24;
+  google.protobuf.Int32Value DurationToMinutes = 25;
+  AttractionDetailItinerary Itinerary = 26;
+  int32 MinGuestsPerBooking = 27;
+  int32 MaxGuestsPerBooking = 28;
+  bool RequiresAdultForBooking = 29;
+}
+
+message InclusionExclusion {
+  google.protobuf.StringValue Category = 1;
+  google.protobuf.StringValue Description = 2;
+}
+
+message OperatingHours {
+  google.protobuf.StringValue ProductOptionCode = 1;
+  google.protobuf.StringValue ProductOptionTitle =2;
+  google.protobuf.StringValue SeasonStartDate = 3;
+  google.protobuf.StringValue SeasonEndDate = 4;
+  repeated OperatingDaysAndTime OperatingDaysAndTimes = 5;
+}
+
+message OperatingDaysAndTime {
+  google.protobuf.StringValue OpensAt = 1;
+  google.protobuf.StringValue ClosesAt = 2;
+  repeated string DaysOfWeek = 3;
+}
+
+message ReviewScore {
+  google.type.Decimal Rating = 1;
+  google.protobuf.Int32Value Count = 2;
+}
+
+message AgeBandModel {
+  google.protobuf.StringValue AgeBand = 1;
+  int32 StartAge = 2;
+  int32 EndAge = 3;
+  int32 MinTravelersPerBooking = 4;
+  int32 MaxTravelersPerBooking = 5;
+}
+
+message AttractionAttribute {
+  int32 AttributeId = 1;
+  google.protobuf.StringValue AttributeName = 2;
+}
+
+message AdditionalDetail {
+  google.protobuf.StringValue Type = 1;
+  google.protobuf.StringValue Description = 2;
+}
+
+message Image {
+  google.protobuf.StringValue ImageUrl = 1;
+  google.protobuf.StringValue Caption = 2;
+}
+
+message AttractionDetailItinerary {
+  google.protobuf.StringValue ItineraryType = 1;
+  google.protobuf.StringValue ItineraryDescription = 2;
+  repeated ItineraryItem ItineraryItems = 3;
+  repeated ItineraryRoute ItineraryRoutes = 4;
+  repeated ItineraryDay ItineraryDays = 5;
+  bool IsPrivateTour = 6;
+  bool IsSkipTheLine = 7;
+  ItineraryActivityInfo ItineraryActivityInfo = 8;
+  repeated Location PointOfInterestLocations = 9;
+}
+
+message ItineraryActivityInfo {
+  google.protobuf.StringValue Description = 1;
+  repeated FoodMenu FoodMenus = 2;
+  Location ActivityLocation = 3;
+}
+
+message FoodMenu{
+  google.protobuf.StringValue Course = 1;
+  google.protobuf.StringValue DishName = 2;
+  google.protobuf.StringValue DishDescription = 3;
+}
+
+message ItineraryDay {
+  int32 DayNumber = 1;
+  google.protobuf.StringValue Title = 2;
+  repeated string Accommodations = 3;
+  repeated FoodAndDrink FoodAndDrinks = 4;
+  repeated ItineraryItem ItineraryItems = 5;
+}
+
+message FoodAndDrink{
+  google.protobuf.StringValue Type = 1;
+  google.protobuf.StringValue TypeDescription = 2;
+  google.protobuf.StringValue Description = 3;
+}
+
+message ItineraryItem {
+  bool IsPassByWithoutStopping = 1;
+  google.protobuf.StringValue AdmissionIncluded = 2;
+  google.protobuf.StringValue Description = 3;
+  Location PointOfInterestLocation = 4;
+  google.protobuf.Int32Value DurationFromMinutes = 5;
+  google.protobuf.Int32Value DurationToMinutes = 6;
+}
+
+message Location {
+  google.protobuf.StringValue LocationName = 1;
+  google.protobuf.StringValue Address = 2;
+  google.protobuf.StringValue Description = 3;
+  google.type.Decimal Longitude = 4;
+  google.type.Decimal Latitude = 5;
+}
+
+message ItineraryRoute {
+  google.protobuf.StringValue Name = 1;
+  google.protobuf.StringValue OperatingSchedule = 2;
+  repeated Location PointOfInterestLocations = 3;
+  google.protobuf.Int32Value DurationFromMinutes = 4;
+  google.protobuf.Int32Value DurationToMinutes = 5;
+  repeated Location StopLocations = 6;
+}
+
+message GetTopCategoryByLocationRequest {
+  string TenantId = 1;
+  int32 BrandId = 2;
+  int32 SalesChannelId = 3;
+  string LanguageCode = 4;
+  int32 LocationId = 5;
+}
+
+message GetTopCategoryByLocationResponse {
+  repeated TopCategoryItem TopCategories = 1;
+}
+
+message TopCategoryItem {
+  int32 AttributeId = 1;
+  int32 SortOrder = 2;
+  string AttributeName = 3;
+  string ImageUrl = 4;
+}
+
+message ProductAvailabilityRangesRequest {
+  string TenantId = 1;
+  int32 BrandId = 2;
+  int32 SalesChannelId = 3;
+  int32 ProductId = 4;
+}
+
+message ProductAvailabilityRangesResponse {
+  repeated BookingPlatform.v1.Shared.ProductAvailabilityRange AvailableRanges = 1;
+}
+
+message AttractionInfoRequest
+{
+  string TenantId = 1;
+  int32 BrandId = 2;
+  int32 SalesChannelId = 3;
+  string LanguageCode = 4;
+  repeated int32 ProductIds = 5;
+}
+
+message AttractionInfoResponse
+{
+  repeated AttractionInfoResponseItem AttractionInfoResponseItems = 1;
+}
+
+message AttractionInfoResponseItem
+{
+    int32 ProductId = 1;
+    string ProductName = 2;
+    google.protobuf.StringValue LocationName = 3;
+    google.protobuf.StringValue MainImageUrl = 4;
+}

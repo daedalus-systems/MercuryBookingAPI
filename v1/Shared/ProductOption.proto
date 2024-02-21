@@ -1,0 +1,12 @@
+﻿syntax = "proto3";
+
+import "google/protobuf/wrappers.proto";
+import "v1/Shared/GuestConfiguration.proto";
+
+package BookingPlatform.v1.Shared;
+
+message ProductOption {
+  google.protobuf.StringValue OptionName = 1;
+  google.protobuf.StringValue OptionCode = 2;
+  repeated BookingPlatform.v1.Shared.GuestConfiguration GuestConfigurations = 3;
+}

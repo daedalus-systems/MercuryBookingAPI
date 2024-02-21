@@ -1,0 +1,11 @@
+﻿syntax = "proto3";
+
+import "google/protobuf/wrappers.proto";
+import "v1/Shared/Google/Type/decimal.proto";
+
+package BookingPlatform.v1.Shared;
+
+message Geolocation {
+  google.type.Decimal Latitude = 1;
+  google.type.Decimal Longitude = 2;
+}

@@ -1,0 +1,15 @@
+﻿syntax = "proto3";
+
+import "v1/Shared/PricesByStartTime.proto";
+import "google/protobuf/wrappers.proto";
+
+package BookingPlatform.v1.Attraction.Common;
+
+/* ProductOption is representing a full set of information of a selectable product option */
+message AttractionProductOption {
+  google.protobuf.StringValue ProductOptionCode = 1; // third party id of the option
+  string CurrencyCode = 2; // currency code connected to all the the money amounts in this response
+  google.protobuf.StringValue Title = 3; // title of the attraction option
+  google.protobuf.StringValue Description = 4; // short description and details of the attraction option
+  repeated BookingPlatform.v1.Shared.PricesByStartTime PricesByStartTime = 5; // contains the hashed token should be used for prebook, total price details and price breakdown by guest type
+}

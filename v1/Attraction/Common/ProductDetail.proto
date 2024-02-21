@@ -1,0 +1,23 @@
+﻿syntax = "proto3";
+import "v1/Shared/Google/Type/decimal.proto";
+import "google/protobuf/wrappers.proto";
+
+package BookingPlatform.v1.Attraction.Common;
+
+message ProductDetail {
+   int32 ProductId = 1;
+   string ProductName = 2;
+   google.type.Decimal ReviewRating = 3;
+   int32 TotalReviews = 4;
+   repeated string TimedEntryList = 5;
+   google.protobuf.StringValue OpensAt = 6;
+   google.protobuf.StringValue ClosesAt = 7;
+   google.protobuf.Int32Value DurationFromMinutes = 8;
+   google.protobuf.Int32Value DurationToMinutes = 9;
+   string MainImageUrl = 10;
+   string ShortDescription = 11;
+   google.type.Decimal FromPrice = 12;
+   string CurrencyCode = 13;
+   repeated int32 AttributeIdList = 14;
+   google.type.Decimal Ranking = 15;
+}
