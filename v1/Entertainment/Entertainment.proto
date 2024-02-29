@@ -228,6 +228,8 @@ message PriceBand {
   bool IsOnSale = 5;
   google.protobuf.StringValue OnSaleStart = 6;
   google.protobuf.StringValue OnSaleEnd = 7;
+  google.protobuf.StringValue DiscountCode = 8;
+  google.protobuf.StringValue DiscountDescription = 9;
 }
 
 enum AvailabilityStatus {
@@ -311,6 +313,7 @@ message ReserveTicketsResponse {
   string TokenExpiry = 5;
   repeated string AllowedCountries = 6;
   google.type.Decimal TotalPrice = 7;
+  string TermsAndConditions = 8;
 }
 
 message ReservedItem {
@@ -319,6 +322,12 @@ message ReservedItem {
   google.type.Decimal TicketPrice = 3;
   google.protobuf.StringValue PriceBandCode = 4;
   int32 Quantity = 5;
+  repeated Seat Seats = 6; // Additional information about individual seats, if available.
+}
+
+message Seat {
+  google.protobuf.StringValue SeatText = 1;  // Comment for the seat, if there's any.
+  google.protobuf.BoolValue IsRestrictedView = 2;
 }
 
 message CancelReservationRequest {
