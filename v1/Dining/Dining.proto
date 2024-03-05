@@ -25,7 +25,7 @@ message SearchRequest{
   optional Shared.Geolocation Geolocation = 6;
   repeated int32 VenueIds = 7;
   int32 PageSize = 8;
-  int32 MaxNumberOfNonAvailableVenues = 9;
+  bool AvailableOnly = 9;  // false by default
   RequestedAvailability RequestedAvailability = 10;
   repeated int32 AttributeIds = 11;
   optional google.type.Decimal MaxDistance = 12;
@@ -57,8 +57,9 @@ message VenueItem {
   google.protobuf.StringValue ImageUrl = 6;
   AvailabilityStatus AvailabilityStatus = 7;
   google.type.Decimal Ranking = 8;
-  optional google.type.Decimal Distance = 9; // Distance from the reference point in km's - If search is based on location (id or coordinates) 
+  optional google.type.Decimal Distance = 9; // Distance from the reference point in km's - If search is based on location (id or coordinates)
   repeated TimeSlot TimeSlots = 10;
+  int32 Order = 11;
 }
 
 message SearchNextPageRequest{

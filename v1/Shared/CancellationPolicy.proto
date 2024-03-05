@@ -9,6 +9,7 @@ message CancellationPolicy {
   repeated SupplierCancellationOptions SupplierCancellationOptions = 1;
   repeated BookingPlatform.v1.Shared.CancellationFee CancellationFees = 2;
   string TimeZone = 3;
+  google.protobuf.StringValue Description = 4;
 }
 
 message SupplierCancellationOptions {
