@@ -135,6 +135,8 @@ message TimeSlot {
   google.type.Decimal TaxAmount = 9;
   google.type.Decimal ServiceChargeAmount = 10;
   google.protobuf.StringValue BookingToken = 11;
+  google.protobuf.StringValue CancellationPolicy = 12; 
+  google.protobuf.StringValue BookingPolicy = 13;
 }
 
 enum PaymentRule {

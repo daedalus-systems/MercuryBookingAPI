@@ -28,6 +28,8 @@ message BookingComponentDetail {
   google.protobuf.StringValue SupplierBookingReference = 17;
   BookingPlatform.v1.Shared.CancellationPolicy CancellationPolicy = 18;
   optional EntertainmentProductOptions EntertainmentProductOptions = 19;
+  repeated BookingComponentProperty AdditionalProperties = 20;
+  optional DiningProductOptions DiningProductOptions = 21;
 }
 
 message EntertainmentProductOptions
@@ -41,4 +43,26 @@ message BookedTicket
   string TicketTypeName = 1;
   google.protobuf.StringValue PriceBandCode = 2;
   int32 Quantity = 3;
+}
+
+message BookingComponentProperty {
+  string Identifier = 1;
+  string Value = 2;
+}
+
+message DiningProductOptions {
+  DiningReservationPaymentRule PaymentRule = 1;
+  google.type.Decimal TotalReserveCost = 2;
+  google.type.Decimal PregratuityTotal = 3;
+  google.type.Decimal MandatedGratuityAmount = 4;
+  google.type.Decimal Gratuity = 5;
+  google.type.Decimal SubTotal = 6;
+  google.type.Decimal TaxAmount = 7;
+  google.type.Decimal ServiceChargeAmount = 8;
+}
+
+enum DiningReservationPaymentRule {
+  NoPayment = 0;
+  AdvancedPayment = 1;
+  SaveForLater = 2;
 }
