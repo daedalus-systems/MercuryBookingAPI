@@ -60,6 +60,7 @@ message VenueItem {
   optional google.type.Decimal Distance = 9; // Distance from the reference point in km's - If search is based on location (id or coordinates)
   repeated TimeSlot TimeSlots = 10;
   int32 Order = 11;
+  bool HasBenefits = 12;
 }
 
 message SearchNextPageRequest{
