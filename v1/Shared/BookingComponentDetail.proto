@@ -36,6 +36,9 @@ message EntertainmentProductOptions
 {
   int32 PerformanceId = 1;
   repeated BookedTicket Tickets = 2;
+  google.type.Decimal TicketSendCost = 3;
+  string SendMethodCode = 4;
+  string SendMethodDescription = 5;
 }
 
 message BookedTicket
