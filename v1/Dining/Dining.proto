@@ -14,6 +14,7 @@ service Dining {
   rpc Search (SearchRequest) returns (stream SearchResponse);
   rpc SearchNextPage (SearchNextPageRequest) returns (stream SearchResponse);
   rpc StartPayment (StartPaymentRequest) returns (StartPaymentResponse);
+  rpc SearchVenues (SearchVenuesRequest) returns (SearchResponse);
 }
 
 message SearchRequest{
@@ -182,4 +183,17 @@ message Attribute {
   int32 Id = 1;
   string Type = 2;
   string Name = 3;
+}
+
+message SearchVenuesRequest {
+  string TenantId = 1;
+  int32 BrandId = 2;
+  int32 SalesChannelId = 3; 
+  BookingPlatform.v1.Shared.Geolocation Geolocation = 4;
+  repeated int32 AttributeIds = 5;
+  string LanguageCode = 6;
+  int32 NumberOfVenues = 7;
+  google.protobuf.Int32Value StartingSearchRadius = 8;
+  google.protobuf.Int32Value MaxSearchRadius = 9;
+  google.protobuf.Int32Value SearchRadiusIncrement = 10;
 }

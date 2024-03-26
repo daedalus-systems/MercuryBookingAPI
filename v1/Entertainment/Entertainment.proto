@@ -210,6 +210,7 @@ message AvailabilityDetails {
     string CurrencyCode = 2;       
     optional SendMethod DefaultSendMethod = 3;
     repeated SendMethod AvailableSendMethods = 4;
+    google.protobuf.StringValue SeatPlanData = 5;
 }
 
 message TicketType {
@@ -303,6 +304,7 @@ message ReserveTicketsRequest {
 message ItemToReserve {
   string TicketToken = 1;
   int32 Quantity = 2;
+  repeated string SeatCodes = 3;
 }
 
 message ReserveTicketsResponse {
